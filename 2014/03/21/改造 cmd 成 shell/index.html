@@ -1,0 +1,433 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>改造 cmd 成 shell | luopuya&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="luopuya">
+    
+    <meta name="description" content="Windows下的cmd不太好用，以下将其增强部分*nix的shell功能
+摘要将cmd改造成shell，关键点：  
+
+Gow
+Clink">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="luopuya&#39;s blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="luopuya&#39;s blog" title="luopuya&#39;s blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="luopuya&#39;s blog">luopuya&#39;s blog</a></h1>
+				<h2 class="blog-motto">Even If You Walk and Walk</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">存档</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:luopuya.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/03/21/改造 cmd 成 shell/" title="改造 cmd 成 shell" itemprop="url">改造 cmd 成 shell</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/106088948921899120000?rel=author" title="luopuya" target="_blank" itemprop="author">luopuya</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-03-21T06:35:00.000Z" itemprop="datePublished">Mar 21 2014</time>
+    更新日期:<time datetime="2014-03-29T08:47:45.000Z" itemprop="dateModified">Mar 29 2014</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#摘要"><span class="toc-number">1.</span> <span class="toc-text">摘要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gow"><span class="toc-number">2.</span> <span class="toc-text">Gow</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Clink"><span class="toc-number">3.</span> <span class="toc-text">Clink</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Tab补全"><span class="toc-number">3.1.</span> <span class="toc-text">Tab补全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GNU_readline"><span class="toc-number">3.2.</span> <span class="toc-text">GNU readline</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他"><span class="toc-number">3.3.</span> <span class="toc-text">其他</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#已知Bug"><span class="toc-number">4.</span> <span class="toc-text">已知Bug</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#另一套方案：Gow+PowerShell"><span class="toc-number">5.</span> <span class="toc-text">另一套方案：Gow+PowerShell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小结"><span class="toc-number">6.</span> <span class="toc-text">小结</span></a></li></ol>
+		</div>
+		
+		<p>Windows下的cmd不太好用，以下将其增强部分*nix的shell功能</p>
+<h2 id="摘要">摘要</h2><p>将cmd改造成shell，关键点：  </p>
+<ul>
+<li>Gow</li>
+<li>Clink  </li>
+</ul>
+<a id="more"></a>
+<h2 id="Gow">Gow</h2><p><a href="https://github.com/bmatzelle/gow" target="_blank" rel="external">Gow</a>是Cygwin的轻量级替代品，封装了130多个开源工具和*nix命令（编译成exe），常用的有：  </p>
+<ul>
+<li>Shell ： bash , zsh</li>
+<li>压缩工具： gzip, zip, bzip2, compress</li>
+<li>SSH： <strong>putty</strong>, psftp, pscp, pageant, plink</li>
+<li>下载工具 ： <strong>curl</strong>, wget</li>
+<li>FTP: NcFTP</li>
+<li>编辑器 ：vim</li>
+<li>字处理 ： <strong>grep</strong>, agrep, less, <strong>cat</strong>, <strong>tail</strong>, <strong>head</strong></li>
+<li>文件工具： mv, cp, du, ls, pwd, rmdir, whereis</li>
+<li>开发工具： make, <strong>diff</strong>, diff3, sleep, cvs, dos2unix, unix2dos</li>
+</ul>
+<p>（上述列表来自<a href="http://www.oschina.net/question/12_10312" target="_blank" rel="external">oschina的Gow说明</a>）<br>下载并安装即可，环境变量会自动设置，并且可往/bin添加新的exe  </p>
+<h2 id="Clink">Clink</h2><p><a href="http://mridgers.github.io/clink/" target="_blank" rel="external">Clink</a>是cmd增强工具，最amazing的功能为：     </p>
+<h3 id="Tab补全">Tab补全</h3><ul>
+<li>路径补全  </li>
+<li>PATH下的可执行文件  </li>
+<li>环境变量  </li>
+</ul>
+<p>更关键的是补全形式为显示列表，而非cmd和PowerShell里的逐个蹦<br><img src="http://ww3.sinaimg.cn/large/734b90c7jw1eewphsj8l0j20ee053dgd.jpg" alt="列表补全效果示意图">  </p>
+<h3 id="GNU_readline">GNU readline</h3><p><a href="http://cnswww.cns.cwru.edu/php/chet/readline/rluserman.html" target="_blank" rel="external">GNU readline</a>让cmd拥有bash的编辑和定制的能力： </p>
+<ul>
+<li>Ctrl-R, Ctrl-S (逆序)搜索历史命令</li>
+<li>Ctrl-A, Ctrl-S 到行首/尾</li>
+<li>Ctrl-U, Ctrl-K 删除到行首/尾</li>
+<li>Ctrl-L 清屏</li>
+<li>……</li>
+</ul>
+<h3 id="其他">其他</h3><ul>
+<li>跨会话（Sessions）的保存  </li>
+<li>更多快捷键<ul>
+<li>Ctrl-V 复制    </li>
+<li>Ctrl-Z 撤销/Undo  </li>
+<li>(Alt-H 查看更多快捷键……)</li>
+</ul>
+</li>
+<li>……  </li>
+</ul>
+<p>设置cmd的autorun仅需：<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clink autorun -i</span><br></pre></td></tr></table></figure></p>
+<h2 id="已知Bug">已知Bug</h2><ul>
+<li>*nix下ls默认ascii编码，Windows文件名编码为GBK（cp936），固ls时中文不显示，建议可补充使用dir  </li>
+</ul>
+<h2 id="另一套方案：Gow+PowerShell">另一套方案：Gow+PowerShell</h2><p>PowerShell诞生于2006年，在较新的Windows系统中均已自带。<br>除了无需安装之外，PowerShell功能强大但占用内存稍大（40M比1M）<br>缺点是没有Clink强大的补全等功能  </p>
+<p>其它诸如Console2, Cmder经尝试不推荐</p>
+<h2 id="小结">小结</h2><p>使用Gow和Clink，使得cmd最薄弱的命令、补全和编辑功能得到补充。  </p>
+<hr>
+<p>参考并特别感谢：  </p>
+<ul>
+<li>开发者bmatzelle和mridgers  </li>
+<li><a href="http://www.hanselman.com/blog/MakingABetterSomewhatPrettierButDefinitelyMoreFunctionalWindowsCommandLine.aspx" target="_blank" rel="external">Scott的“better cmd”</a>及<a href="http://blogs.msdn.com/b/scott_hanselman/archive/2013/07/31/windows.aspx" target="_blank" rel="external">中文版</a></li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/cmd/">cmd</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Tool/">Tool</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://luopuya.github.io/2014/03/21/改造 cmd 成 shell/" data-title="改造 cmd 成 shell | luopuya&#39;s blog" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/03/21/Sublime Text as python ide/" title="Sublime Text as Python IDE">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  Sublime Text as Python IDE</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2013/11/29/Ubuntu 安装后的 Todolist/"  title="Ubuntu 安装后的 Todolist">
+ <strong>NEXT:</strong><br/> 
+ <span>Ubuntu 安装后的 Todolist
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#摘要"><span class="toc-number">1.</span> <span class="toc-text">摘要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gow"><span class="toc-number">2.</span> <span class="toc-text">Gow</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Clink"><span class="toc-number">3.</span> <span class="toc-text">Clink</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Tab补全"><span class="toc-number">3.1.</span> <span class="toc-text">Tab补全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GNU_readline"><span class="toc-number">3.2.</span> <span class="toc-text">GNU readline</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他"><span class="toc-number">3.3.</span> <span class="toc-text">其他</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#已知Bug"><span class="toc-number">4.</span> <span class="toc-text">已知Bug</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#另一套方案：Gow+PowerShell"><span class="toc-number">5.</span> <span class="toc-text">另一套方案：Gow+PowerShell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小结"><span class="toc-number">6.</span> <span class="toc-text">小结</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Algorithm/" title="Algorithm">Algorithm<sup>1</sup></a></li>
+		
+			<li><a href="/categories/Issue/" title="Issue">Issue<sup>4</sup></a></li>
+		
+			<li><a href="/categories/Tool/" title="Tool">Tool<sup>4</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/bashrc/" title=".bashrc">.bashrc<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Algorithm/" title="Algorithm">Algorithm<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Python/" title="Python">Python<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Sublime-Text/" title="Sublime Text">Sublime Text<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Ubuntu/" title="Ubuntu">Ubuntu<sup>1</sup></a></li>
+		
+			<li><a href="/tags/alias/" title="alias">alias<sup>1</sup></a></li>
+		
+			<li><a href="/tags/cmd/" title="cmd">cmd<sup>2</sup></a></li>
+		
+			<li><a href="/tags/编码/" title="编码">编码<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://maziang.com/" target="_blank" title="Maziang's blog">Maziang's blog</a></li>
+    </ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font clearfix">
+		
+		
+		
+		<a href="https://github.com/luopuya" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://luopuya.github.io" target="_blank" title="luopuya">luopuya</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"luopuya"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-49528806-1', 'luopuya.github.io');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
