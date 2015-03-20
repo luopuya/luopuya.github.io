@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Even If You Walk and Walk]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://luopuya.github.io/"/>
-  <updated>2015-01-23T03:18:47.000Z</updated>
+  <updated>2015-03-20T10:49:44.000Z</updated>
   <id>http://luopuya.github.io/</id>
   
   <author>
@@ -19,47 +19,56 @@
     <link href="http://luopuya.github.io/2015/01/23/KMP/"/>
     <id>http://luopuya.github.io/2015/01/23/KMP/</id>
     <published>2015-01-23T02:34:16.000Z</published>
-    <updated>2015-01-23T03:18:47.000Z</updated>
-    <content type="html"><![CDATA[<p>朴素的字符串查找的复杂度是O(MN)的，显然这里有很大的优化空间，KMP算法(Knuth-Morris-Pratt)可优化至O(M+N)。  </p>
-<a id="more"></a>
-<h2 id="引入next[]">引入next[]</h2><p><em>注：本文使用Python的slice，即[b:e]为左闭右开</em></p>
-<p>假设比较如下字符串（上行为S，下行为W）  </p>
+    <updated>2015-03-20T10:49:44.000Z</updated>
+    <content type="html"><![CDATA[<p>朴素的字符串查找的复杂度是 O(MN) 的，显然这里有很大的优化空间，KMP 算法 (Knuth-Morris-Pratt) 可优化至 O(M+N)。  </p>
+<h1 id="引入_next[]">引入 next[]</h1><p><em>注：本文使用 Python 的 slice，即 [b:e] 为左闭右开</em></p>
+<p>假设比较如下字符串（上行为 S，下行为 W）  </p>
 <p><img src="http://ww2.sinaimg.cn/large/734b90c7jw1eoj9urz6tkj20yp030jrv.jpg" alt="CMP"></p>
-<p>当发现’D’与’X’不符时，并不需要重新比较’BCABX……’和’ABCABD……’，而是根据W本身的性质，紧接着比较’X……’和’CABD……’<br><strong>可视为在匹配S的’X’时，比较的字符从’D’(W[5])“跳至”为’C’(W[2])<br>之所以可以这样比较，是因为W[0:2] == W[3:5] == ‘AB’  </strong></p>
-<p>对于W中的所有字符，都有这样的允许“跳至”的位置，不妨记录至next[]数组，例如对于上例的W，next[5] = 2</p>
-<p>参考上文，对于W，我们这样定义next[]数组  </p>
+<p>当发现 ‘D’ 与 ‘X’ 不符时，并不需要重新比较 ‘BCABX……’ 和 ‘ABCABD……’ ，而是根据 W 本身的性质，紧接着比较 ‘X……’ 和 ‘CABD……’  </p>
+<p><strong>可视为在匹配 S 的 ‘X’ 时，比较的字符从  ‘D’(W[5]) “跳至” ‘C’(W[2])</strong><br><strong>之所以可以这样比较，是因 为 W[0:2] == W[3:5] == ‘AB’</strong>  </p>
+<p>对于 W 中的所有字符，都有这样的允许“跳至”的位置，不妨记录至 next[]数组，例如对于上例的 W，next[5] = 2</p>
+<p>参考上文，对于 W，我们这样定义 next[] 数组  </p>
 <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">next</span>[i] = max&#123;j | <span class="constant">W[</span><span class="number">0</span><span class="symbol">:j</span>] == <span class="constant">W[</span>i-<span class="symbol">j:</span>i] <span class="keyword">for</span> -<span class="number">1</span> &lt;= j &lt; i&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="next[]的有效性">next[]的有效性</h3><ol>
-<li>由j的max性质可保证查找不会遗漏匹配  </li>
-<li>查找匹配时，当W[i]不符时，跳至W[next[i]]继续比较即可  </li>
+<a id="more"></a>
+<h2 id="next[]_的有效性">next[] 的有效性</h2><ol>
+<li>由 j 的 max 性质可保证查找不会遗漏匹配  </li>
+<li>查找匹配时，当 W[i] 不符时，跳至 W[next[i]] 继续比较即可  </li>
 </ol>
-<h3 id="next[]的推导">next[]的推导</h3><p>先进行简单考察  </p>
+<h2 id="next[]_的推导">next[] 的推导</h2><p>先进行简单考察  </p>
 <ol>
-<li>显然next[0] = -1  </li>
-<li>当next[i] = j时（可知W[0:j] == W[i-j:i]），考察next[i+1]  <ul>
-<li>若W[i] == W[j]<br>  则有W[0:j+1] == W[i-j:i+1]<br>  猜想next[i + 1] = j + 1  </li>
-<li>若W[i] != W[j]，记next[j] = k<br>  因为W[0:k] == W[j-k:j] == W[i-k:i]<br>  猜想问题递归为j = k时的小问题</li>
+<li>显然 next[0] = -1  </li>
+<li>当 next[i] = j 时（可知 W[0:j] == W[i-j:i]），考察 next[i+1]  <ul>
+<li>若 W[i] == W[j]<br>  则有 W[0:j+1] == W[i-j:i+1]<br>  猜想 next[i + 1] = j + 1  </li>
+<li>若 W[i] != W[j]，记next[j] = k<br>  因为 W[0:k] == W[j-k:j] == W[i-k:i]<br>  猜想问题递归为 j = k 时的小问题</li>
 </ul>
 </li>
 </ol>
 <p><img src="http://ww2.sinaimg.cn/large/734b90c7jw1eoj9vtyt9tj20y803hq3d.jpg" alt="KMP"></p>
 <p>整理易得如下递归形式：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solve_next</span><span class="params">(W)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_solve_next</span><span class="params">(NEXT, W, i, j, k)</span>:</span></span><br><span class="line">        <span class="comment"># 前提1：W[0:j] == W[i-j:i]</span></span><br><span class="line">        <span class="comment"># 前提2：NEXT[j] = k, 可知W[0:k] == W[j-k:j]</span></span><br><span class="line">        <span class="comment"># j不参与运算，仅辅助证明</span></span><br><span class="line">        <span class="keyword">if</span> (k == -<span class="number">1</span>) <span class="keyword">or</span> (W[i] == W[k]):</span><br><span class="line">            <span class="comment"># NEXT[i + 1] &gt;= k + 1</span></span><br><span class="line">            <span class="comment"># 又NEXT[i + 1] &lt;= k + 1，否则可推出NEXT[j] &gt; k，矛盾</span></span><br><span class="line">            NEXT[i + <span class="number">1</span>] = k + <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># 显然满足前提1、2。(W[0:k] == W[j-k:j] == W[i-k:i])</span></span><br><span class="line">            _solve_next(NEXT, W, i, k, NEXT[k])</span><br><span class="line"></span><br><span class="line">    n = len(W)</span><br><span class="line">    NEXT = [-<span class="number">1</span>] * n</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n - <span class="number">1</span>):</span><br><span class="line">        _solve_next(NEXT, W, i, i, NEXT[i])</span><br><span class="line">    <span class="keyword">return</span> NEXT</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solve_next</span><span class="params">(W)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_solve_next</span><span class="params">(NEXT, W, i, j, k)</span>:</span></span><br><span class="line">        <span class="comment"># 前提1：W[0:j] == W[i-j:i]</span></span><br><span class="line">        <span class="comment"># 前提2：NEXT[j] = k, 可知 W[0:k] == W[j-k:j]</span></span><br><span class="line">        <span class="comment"># j 不参与运算，仅辅助证明</span></span><br><span class="line">        <span class="keyword">if</span> (k == -<span class="number">1</span>) <span class="keyword">or</span> (W[i] == W[k]):</span><br><span class="line">            <span class="comment"># NEXT[i + 1] &gt;= k + 1</span></span><br><span class="line">            <span class="comment"># 又 NEXT[i + 1] &lt;= k + 1，否则可推出 NEXT[j] &gt; k，矛盾</span></span><br><span class="line">            NEXT[i + <span class="number">1</span>] = k + <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># 显然满足前提1、2。(W[0:k] == W[j-k:j] == W[i-k:i])</span></span><br><span class="line">            _solve_next(NEXT, W, i, k, NEXT[k])</span><br><span class="line"></span><br><span class="line">    n = len(W)</span><br><span class="line">    NEXT = [-<span class="number">1</span>] * n</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n - <span class="number">1</span>):</span><br><span class="line">        _solve_next(NEXT, W, i, i, NEXT[i])</span><br><span class="line">    <span class="keyword">return</span> NEXT</span><br></pre></td></tr></table></figure>
 <p>不难转为递推形式</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solve_next</span><span class="params">(W)</span>:</span></span><br><span class="line">    n, i, j = len(W), <span class="number">0</span>, -<span class="number">1</span></span><br><span class="line">    NEXT = [-<span class="number">1</span>] * n</span><br><span class="line">    <span class="keyword">while</span> i &lt; n - <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">if</span> (j == -<span class="number">1</span>) <span class="keyword">or</span> (W[i] == W[j]):</span><br><span class="line">            NEXT[i + <span class="number">1</span>] = j + <span class="number">1</span></span><br><span class="line">            i, j = i + <span class="number">1</span>, j + <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            j = NEXT[j]</span><br><span class="line">    <span class="keyword">return</span> NEXT</span><br></pre></td></tr></table></figure>
-<p>利用next[]即可高效查找匹配  </p>
+<p>利用 next[] 即可高效查找匹配  </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">search</span><span class="params">(W, S)</span>:</span></span><br><span class="line">    NEXT = solve_next(W)</span><br><span class="line">    i, j, m, n = <span class="number">0</span>, <span class="number">0</span>, len(W), len(S)</span><br><span class="line">    <span class="keyword">while</span> i &lt; m <span class="keyword">and</span> j &lt; n:</span><br><span class="line">        <span class="keyword">if</span> (i == -<span class="number">1</span>) <span class="keyword">or</span> (W[i] == S[j]):</span><br><span class="line">            i, j = i + <span class="number">1</span>, j + <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            i = NEXT[i]</span><br><span class="line">    <span class="keyword">return</span> (i == m)</span><br></pre></td></tr></table></figure>
-<h3 id="next[]的小优化">next[]的小优化</h3><p>对于下图情况，当W中后’A’不符时，根本无需再匹配前’A’，即next[1] = -1比next[1] = 0更高效  </p>
+<h2 id="next[]_的小优化">next[] 的小优化</h2><p>对于下图情况，当 W 中后 ‘A’ 不符时，根本无需再匹配前 ‘A’ ，即 next[1] = -1比next[1] = 0 更高效  </p>
 <p><img src="http://ww3.sinaimg.cn/large/734b90c7jw1eoj9vzy2cij20q103n3yo.jpg" alt="Advance"></p>
-<p>针对这样的情况，我们可以对next[]的定义稍稍修改  </p>
+<p>针对这样的情况，我们可以对 next[] 的定义稍稍修改  </p>
 <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">next</span>[i] = max&#123;j | <span class="constant">W[</span><span class="number">0</span><span class="symbol">:j</span>] == <span class="constant">W[</span>i-<span class="symbol">j:</span>i] <span class="keyword">and</span> <span class="constant">W[</span>j] != <span class="constant">W[</span>i] <span class="keyword">for</span> -<span class="number">1</span> &lt;= j &lt; i&#125;</span><br></pre></td></tr></table></figure>
-<p>同样可先推导递归形式（max性质同样可归纳证明，已略去）  </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solve_next</span><span class="params">(W)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_solve_next</span><span class="params">(NEXT, W, i, j)</span>:</span></span><br><span class="line">        <span class="comment"># 前提：W[0:j] == W[i-j:i]</span></span><br><span class="line">        <span class="keyword">if</span> (j == -<span class="number">1</span>) <span class="keyword">or</span> (W[i] == W[j]):</span><br><span class="line">            <span class="keyword">if</span> W[i + <span class="number">1</span>] != W[j + <span class="number">1</span>]:  <span class="comment"># 保证NEXT的性质</span></span><br><span class="line">                NEXT[i + <span class="number">1</span>] = j + <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># ni, nj = i + 1, j + 1  # next_i, next_j, 已知W[ni] == W[nj]</span></span><br><span class="line">                <span class="comment"># W[0:NEXT[nj]] == W[nj-NEXT[nj]:nj] == W[ni-NEXT[nj]:ni]</span></span><br><span class="line">                <span class="comment"># W[NEXT[nj]] != W[nj], 因此W[NEXT[nj]] != W[ni]</span></span><br><span class="line">                NEXT[i + <span class="number">1</span>] = NEXT[j + <span class="number">1</span>]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># 满足前提。(W[0:NEXT[j]] == W[j-NEXT[j]:j] == W[i-NEXT[j]:i])</span></span><br><span class="line">            _solve_next(NEXT, W, i, NEXT[j])</span><br><span class="line"></span><br><span class="line">    n = len(W)</span><br><span class="line">    NEXT = [-<span class="number">1</span>] * n</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n - <span class="number">1</span>):</span><br><span class="line">        _solve_next(NEXT, W, i, NEXT[i])</span><br><span class="line">    <span class="keyword">return</span> NEXT</span><br></pre></td></tr></table></figure>
+<p>同样可先推导递归形式（ max 性质同样可归纳证明，已略去）  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solve_next</span><span class="params">(W)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_solve_next</span><span class="params">(NEXT, W, i, j)</span>:</span></span><br><span class="line">        <span class="comment"># 前提：W[0:j] == W[i-j:i]</span></span><br><span class="line">        <span class="keyword">if</span> (j == -<span class="number">1</span>) <span class="keyword">or</span> (W[i] == W[j]):</span><br><span class="line">            <span class="keyword">if</span> W[i + <span class="number">1</span>] != W[j + <span class="number">1</span>]:  <span class="comment"># 保证 NEXT 的性质</span></span><br><span class="line">                NEXT[i + <span class="number">1</span>] = j + <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># ni, nj = i + 1, j + 1  # next_i, next_j, 已知 W[ni] == W[nj]</span></span><br><span class="line">                <span class="comment"># W[0:NEXT[nj]] == W[nj-NEXT[nj]:nj] == W[ni-NEXT[nj]:ni]</span></span><br><span class="line">                <span class="comment"># W[NEXT[nj]] != W[nj], 因此 W[NEXT[nj]] != W[ni]</span></span><br><span class="line">                NEXT[i + <span class="number">1</span>] = NEXT[j + <span class="number">1</span>]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># 满足前提。(W[0:NEXT[j]] == W[j-NEXT[j]:j] == W[i-NEXT[j]:i])</span></span><br><span class="line">            _solve_next(NEXT, W, i, NEXT[j])</span><br><span class="line"></span><br><span class="line">    n = len(W)</span><br><span class="line">    NEXT = [-<span class="number">1</span>] * n</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n - <span class="number">1</span>):</span><br><span class="line">        _solve_next(NEXT, W, i, NEXT[i])</span><br><span class="line">    <span class="keyword">return</span> NEXT</span><br></pre></td></tr></table></figure>
 <p>转为递推形式  </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solve_next</span><span class="params">(W)</span>:</span></span><br><span class="line">    n, i, j = len(W), <span class="number">0</span>, -<span class="number">1</span></span><br><span class="line">    NEXT = [-<span class="number">1</span>] * n</span><br><span class="line">    <span class="keyword">while</span> i &lt; n - <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">if</span> (j == -<span class="number">1</span>) <span class="keyword">or</span> (W[i] == W[j]):</span><br><span class="line">            i, j = i + <span class="number">1</span>, j + <span class="number">1</span></span><br><span class="line">            NEXT[i] = j <span class="keyword">if</span> W[i] != W[j] <span class="keyword">else</span> NEXT[j]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            j = NEXT[j]</span><br><span class="line">    <span class="keyword">return</span> NEXT</span><br></pre></td></tr></table></figure>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>朴素的字符串查找的复杂度是O(MN)的，显然这里有很大的优化空间，KMP算法(Knuth-Morris-Pratt)可优化至O(M+N)。  </p>]]>
+    <![CDATA[<p>朴素的字符串查找的复杂度是 O(MN) 的，显然这里有很大的优化空间，KMP 算法 (Knuth-Morris-Pratt) 可优化至 O(M+N)。  </p>
+<h1 id="引入_next[]">引入 next[]</h1><p><em>注：本文使用 Python 的 slice，即 [b:e] 为左闭右开</em></p>
+<p>假设比较如下字符串（上行为 S，下行为 W）  </p>
+<p><img src="http://ww2.sinaimg.cn/large/734b90c7jw1eoj9urz6tkj20yp030jrv.jpg" alt="CMP"></p>
+<p>当发现 ‘D’ 与 ‘X’ 不符时，并不需要重新比较 ‘BCABX……’ 和 ‘ABCABD……’ ，而是根据 W 本身的性质，紧接着比较 ‘X……’ 和 ‘CABD……’  </p>
+<p><strong>可视为在匹配 S 的 ‘X’ 时，比较的字符从  ‘D’(W[5]) “跳至” ‘C’(W[2])</strong><br><strong>之所以可以这样比较，是因 为 W[0:2] == W[3:5] == ‘AB’</strong>  </p>
+<p>对于 W 中的所有字符，都有这样的允许“跳至”的位置，不妨记录至 next[]数组，例如对于上例的 W，next[5] = 2</p>
+<p>参考上文，对于 W，我们这样定义 next[] 数组  </p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">next</span>[i] = max&#123;j | <span class="constant">W[</span><span class="number">0</span><span class="symbol">:j</span>] == <span class="constant">W[</span>i-<span class="symbol">j:</span>i] <span class="keyword">for</span> -<span class="number">1</span> &lt;= j &lt; i&#125;</span><br></pre></td></tr></table></figure>]]>
     
     </summary>
     
@@ -70,24 +79,23 @@
   </entry>
   
   <entry>
-    <title><![CDATA[alias for cmd in Windows]]></title>
-    <link href="http://luopuya.github.io/2015/01/09/alias%20for%20cmd%20in%20Windows/"/>
-    <id>http://luopuya.github.io/2015/01/09/alias for cmd in Windows/</id>
+    <title><![CDATA[Alias for cmd]]></title>
+    <link href="http://luopuya.github.io/2015/01/09/Alias%20for%20cmd/"/>
+    <id>http://luopuya.github.io/2015/01/09/Alias for cmd/</id>
     <published>2015-01-09T07:05:16.000Z</published>
-    <updated>2015-01-09T07:34:18.000Z</updated>
-    <content type="html"><![CDATA[<p>shell通过修改.bashrc可以定制alias，cmd则稍稍麻烦一些  </p>
-<h2 id="摘要">摘要</h2><p>设置cmd的AutoRun，实现alias</p>
-<a id="more"></a>
-<h2 id="正文">正文</h2><p>cmd中用doskey定义宏，可以直接定义或读取配置文件</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">doskey</span> ls=<span class="built_in">dir</span></span><br><span class="line"><span class="built_in">doskey</span> c++<span class="number">11</span>=g++ -std=c++<span class="number">11</span> $*   :: $*接收剩余的参数</span><br><span class="line"><span class="built_in">doskey</span> /macrofile=file   :: 或者将ls=<span class="built_in">dir</span>等记录在file文件</span><br></pre></td></tr></table></figure>
-<p>剩下的问题在于如何让cmd自动执行doskey指令<br>shell默认从.bashrc中读取设置，而在cmd中需要用AutoRun专门指定  </p>
-<p>假设C:\alias.doskey里记录好宏定义，则将下文保存为reg文件并运行即可  </p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Windows Registry Editor Version 5.00&#10;&#10;[HKEY_CURRENT_USER\Software\Microsoft\Command Processor]&#10;&#34;AutoRun&#34;=&#34;doskey /macrofile=C:\\alias.doskey&#34;</span><br></pre></td></tr></table></figure>
+    <updated>2015-03-20T10:52:07.000Z</updated>
+    <content type="html"><![CDATA[<p>shell 通过修改 .bashrc 可以定制 alias，cmd 则稍稍麻烦一些  </p>
+<p>cmd 中用 doskey 定义宏，可以直接定义或读取配置文件：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">doskey</span> ls=<span class="built_in">dir</span></span><br><span class="line"><span class="built_in">doskey</span> c++<span class="number">11</span>=g++ -std=c++<span class="number">11</span> $*   :: $*接收剩余的参数</span><br><span class="line"><span class="built_in">doskey</span> /macrofile=file   :: 或者将 ls=<span class="built_in">dir</span> 等记录在 file 文件</span><br></pre></td></tr></table></figure>
+<p>剩下的问题在于如何让 cmd 自动执行 doskey 指令  </p>
+<p>shell 默认从 .bashrc 中读取设置，而在 cmd 中需要用 AutoRun 专门指定  </p>
+<p>假设 C:\alias.doskey 里记录好宏定义，则将下文保存为 reg 文件并运行即可  </p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Windows Registry Editor Version 5.00</span><br><span class="line"></span><br><span class="line"><span class="special">[</span>HKEY_CURRENT_USER<span class="command">\Software</span><span class="command">\Microsoft</span><span class="command">\Command</span> Processor<span class="special">]</span></span><br><span class="line">"AutoRun"="doskey /macrofile=C:<span class="command">\\</span>alias.doskey"</span><br></pre></td></tr></table></figure>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>shell通过修改.bashrc可以定制alias，cmd则稍稍麻烦一些  </p>
-<h2 id="摘要">摘要</h2><p>设置cmd的AutoRun，实现alias</p>]]>
-    
+    <![CDATA[<p>shell 通过修改 .bashrc 可以定制 alias，cmd 则稍稍麻烦一些  </p>
+<p>cmd 中用 doskey 定义宏，可以直接定义或读取配置文件：</p>
+<figure class="highlight cmd"><table><tr><td clas]]>
     </summary>
     
       <category term="alias" scheme="http://luopuya.github.io/tags/alias/"/>
@@ -99,25 +107,140 @@
   </entry>
   
   <entry>
-    <title></title>
-    <link href="http://luopuya.github.io/2015/01/09/Sublime%20Text%203%20%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/"/>
-    <id>http://luopuya.github.io/2015/01/09/Sublime Text 3 常用快捷键/</id>
-    <published>2015-01-09T05:08:39.000Z</published>
-    <updated>2014-04-08T14:12:25.000Z</updated>
-    <content type="html"><![CDATA[<p>title: Sublime Text 3 常用快捷键<br>date: 2014-3-26 20:09<br>categories: Tool  </p>
-<h2 id="tags:_Sublime_Text">tags: Sublime Text  </h2><p>Sublime Text 3强大的不只有插件，自带快捷键亦可圈可点，下文介绍常用快捷键   </p>
-<h2 id="摘要">摘要</h2><p>Sublime Text 3快捷键关键点：   </p>
+    <title><![CDATA[Python Subprocess with .bashrc]]></title>
+    <link href="http://luopuya.github.io/2014/03/29/Python%20Subprocess%20with%20.bashrc/"/>
+    <id>http://luopuya.github.io/2014/03/29/Python Subprocess with .bashrc/</id>
+    <published>2014-03-29T10:17:00.000Z</published>
+    <updated>2015-03-20T11:02:15.000Z</updated>
+    <content type="html"><![CDATA[<p>Python 调用 Shell 使用 subprocess 即可</p>
+<p><em>（注意: 依照<a href="https://docs.python.org/2.7/library/subprocess.html#module-subprocess" target="_blank" rel="external">官方文档</a>，使用 subprocess 替换 os.system, os.spawn*, os.popen*, popen2.*, commands.*）</em></p>
+<p>但直接执行 .bashrc 里的命令并不成功，原因没有显示指出需要读取配置  </p>
+<p>bash 中的读取指令为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bin/bash -i -c</span><br></pre></td></tr></table></figure>
+<p>如下为正确处理方式：  </p>
+<p>例如 .bashrc 里有 alias saverm=rm -i  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> subprocess <span class="keyword">as</span> sp</span><br><span class="line">sp.call(<span class="string">"/bin/bash -i -c saverm ./"</span>, shell=<span class="keyword">True</span>)</span><br><span class="line"><span class="comment"># or use Popen</span></span><br><span class="line"><span class="comment"># p = sp.Popen(["/bin/bash", "-i", "-c", "saverm ./"])</span></span><br><span class="line"><span class="comment"># p.communicate()</span></span><br></pre></td></tr></table></figure>
+<p>简要说明一下，call 其实是封装了 Popen，是同步的（等待子进程完成），<br>可参考<a href="http://www.cnblogs.com/vamei/archive/2012/09/23/2698014.html" target="_blank" rel="external">Vamei 的博客</a></p>
+<p><strong>注意：暴露 shell 是相当危险的，比如在  web 下暴露可能被执行  rm 指令</strong></p>
+<p>参考并特别感谢 <a href="http://stackoverflow.com/a/6857271" target="_blank" rel="external">stackoverflow 的解答</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Python 调用 Shell 使用 subprocess 即可</p>
+<p><em>（注意: 依照<a href="https://docs.python.org/2.7/library/subprocess.html#module-subprocess" target]]>
+    </summary>
+    
+      <category term=".bashrc" scheme="http://luopuya.github.io/tags/bashrc/"/>
+    
+      <category term="Python" scheme="http://luopuya.github.io/tags/Python/"/>
+    
+      <category term="Issue" scheme="http://luopuya.github.io/categories/Issue/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Linux 压缩中文文件名乱码]]></title>
+    <link href="http://luopuya.github.io/2014/03/29/Linux%20%E5%8E%8B%E7%BC%A9%E4%B8%AD%E6%96%87%E6%96%87%E4%BB%B6%E5%90%8D%E4%B9%B1%E7%A0%81/"/>
+    <id>http://luopuya.github.io/2014/03/29/Linux 压缩中文文件名乱码/</id>
+    <published>2014-03-29T09:07:00.000Z</published>
+    <updated>2015-03-20T11:02:54.000Z</updated>
+    <content type="html"><![CDATA[<p>Linux 的 tar 并不保存编码集，有如下解决方式：</p>
+<h2 id="使用_7zip_或_rar">使用 7zip 或 rar</h2><p>7zip 安装如无权限，修改 install.sh 里的 DEST_HOME<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DEST_HOME=~/.local</span><br></pre></td></tr></table></figure></p>
+<p><em>注：可参考笔者上篇博文</em></p>
+<h2 id="人工/脚本转换文件名">人工/脚本转换文件名</h2><p>文件内容并不会乱码，因而临时人工修改，或用脚本做映射也是权宜之计  </p>
+<hr>
+<p>参考:<br><a href="http://gm.angeldm.com/post/202" target="_blank" rel="external">观夏 Note</a><br><a href="http://blog.sina.com.cn/s/blog_56a70c040101fxxz.html" target="_blank" rel="external">浆糊的 BLOG</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Linux 的 tar 并不保存编码集，有如下解决方式：</p>
+<h2 id="使用_7zip_或_rar">使用 7zip 或 rar</h2><p>7zip 安装如无权限，修改 install.sh 里的 DEST_HOME<br><figure class="hig]]>
+    </summary>
+    
+      <category term="Linux" scheme="http://luopuya.github.io/tags/Linux/"/>
+    
+      <category term="编码" scheme="http://luopuya.github.io/tags/%E7%BC%96%E7%A0%81/"/>
+    
+      <category term="Issue" scheme="http://luopuya.github.io/categories/Issue/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Linux 无权限安装软件]]></title>
+    <link href="http://luopuya.github.io/2014/03/29/Linux%20%E6%97%A0%E6%9D%83%E9%99%90%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6/"/>
+    <id>http://luopuya.github.io/2014/03/29/Linux 无权限安装软件/</id>
+    <published>2014-03-29T09:04:00.000Z</published>
+    <updated>2015-03-20T11:04:28.000Z</updated>
+    <content type="html"><![CDATA[<p>Linux 软件常常默认安装在 /usr/bin 之类的目录下，没有权限的话需要指定安装路径 </p>
+<p>通常有以下三种途径：</p>
+<h2 id="配置时指定">配置时指定</h2><p>最常见，如 nginx<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=~/.local</span><br></pre></td></tr></table></figure></p>
+<p><em>注: ./configure 其实是 shell 脚本，根据环境生成 Makefile 或其他</em></p>
+<h2 id="安装时指定">安装时指定</h2><p>如 Python 的包<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python setup.py --prefix=~/.local</span><br></pre></td></tr></table></figure></p>
+<h2 id="修改安装的_shell_脚本">修改安装的 shell 脚本</h2><p>如 7zip ，修改 install.sh<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DEST_HOME=~/.local</span><br></pre></td></tr></table></figure></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Linux 软件常常默认安装在 /usr/bin 之类的目录下，没有权限的话需要指定安装路径 </p>
+<p>通常有以下三种途径：</p>
+<h2 id="配置时指定">配置时指定</h2><p>最常见，如 nginx<br><figure class="highlight]]>
+    </summary>
+    
+      <category term="Linux" scheme="http://luopuya.github.io/tags/Linux/"/>
+    
+      <category term="Issue" scheme="http://luopuya.github.io/categories/Issue/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Python 判断汉字]]></title>
+    <link href="http://luopuya.github.io/2014/03/29/Python%20%E5%88%A4%E6%96%AD%E6%B1%89%E5%AD%97%E5%AD%97%E7%AC%A6/"/>
+    <id>http://luopuya.github.io/2014/03/29/Python 判断汉字字符/</id>
+    <published>2014-03-29T06:24:00.000Z</published>
+    <updated>2015-03-20T10:31:20.000Z</updated>
+    <content type="html"><![CDATA[<p>使用 unicode 范围 <strong>\u4e00 - \u9fff</strong> 来判别汉字</p>
+<p><em>unicode 分配给汉字（中日韩越统一表意文字）的范围为 <strong>4E00-9FFF</strong> </em><br><em>（目前 unicode 6.3 的标准已定义到 9FCC ）</em></p>
+<p>在 Python 3 中，判断字符是否汉字的方法如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ishan</span><span class="params">(text)</span>:</span></span><br><span class="line">    <span class="comment"># for python 3.x</span></span><br><span class="line">    <span class="comment"># sample: ishan('一') == True, ishan('我&amp;&amp;你') == False</span></span><br><span class="line">    <span class="keyword">return</span> all(<span class="string">'\u4e00'</span> &lt;= char &lt;= <span class="string">'\u9fff'</span> <span class="keyword">for</span> char <span class="keyword">in</span> text)</span><br></pre></td></tr></table></figure>
+<p>而在 Python 2 中则为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ishan</span><span class="params">(text)</span>:</span></span><br><span class="line">    <span class="comment"># for python 2.x, 3.3+</span></span><br><span class="line">    <span class="comment"># sample: ishan(u'一') == True, ishan(u'我&amp;&amp;你') == False</span></span><br><span class="line">    <span class="keyword">return</span> all(<span class="string">u'\u4e00'</span> &lt;= char &lt;= <span class="string">u'\u9fff'</span> <span class="keyword">for</span> char <span class="keyword">in</span> text)</span><br></pre></td></tr></table></figure>
+<p><strong>补充说明</strong>   </p>
+<ol>
+<li>Python 3.3+ 重新支持 Python 2 中用 u 表示 unicode 的方式   </li>
+<li>\u4e00-\u9fff 不包含中文符号，如有需要可参考<a href="http://goo.gl/hyUcT7" target="_blank" rel="external">维基</a>   </li>
+<li>网上常见的 \u4e00-\u9fa5 写太死了，虽说目前而言后面的都是极其罕见的字  </li>
+</ol>
+<hr>
+<p>参考：<a href="http://www.unicode.org/charts/PDF/U4E00.pdf" target="_blank" rel="external">http://www.unicode.org/charts/PDF/U4E00.pdf</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>使用 unicode 范围 <strong>\u4e00 - \u9fff</strong> 来判别汉字</p>
+<p><em>unicode 分配给汉字（中日韩越统一表意文字）的范围为 <strong>4E00-9FFF</strong> </em><br><em>（目前]]>
+    </summary>
+    
+      <category term="Python" scheme="http://luopuya.github.io/tags/Python/"/>
+    
+      <category term="编码" scheme="http://luopuya.github.io/tags/%E7%BC%96%E7%A0%81/"/>
+    
+      <category term="Issue" scheme="http://luopuya.github.io/categories/Issue/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Sublime Text 3 常用快捷键]]></title>
+    <link href="http://luopuya.github.io/2014/03/26/Sublime%20Text%203%20%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/"/>
+    <id>http://luopuya.github.io/2014/03/26/Sublime Text 3 常用快捷键/</id>
+    <published>2014-03-26T12:09:16.000Z</published>
+    <updated>2015-03-20T11:25:46.000Z</updated>
+    <content type="html"><![CDATA[<p>Sublime Text 3 强大的不只有插件，自带快捷键亦可圈可点，下文介绍常用快捷键   </p>
+<h2 id="摘要">摘要</h2><p>Sublime Text 3 快捷键关键点：   </p>
 <ol>
 <li>多区域编辑与行编辑的能力   </li>
-<li>Go To与Ctrl+Shift+P   </li>
+<li>Go To 与 Ctrl + Shift + P   </li>
 <li>快捷键的管理机制   </li>
 <li>功能全面：宏、折叠、多界面等   </li>
 <li>可以使用历史记录的复制   </li>
 </ol>
 <a id="more"></a>  
-<p>Sublime Text的系统自带快捷键在Key Bindings - Default里，<br>优先级别低于Key Bindings - User，<br>（优先级最高的则是插件的快捷键）<br>所有的设置均在*.sublime-keymap文件中   </p>
-<p>此外，注意Sublime Text光标在快捷键下可能表示<br><strong>当前位置</strong>、<strong>当前词</strong>、<strong>当前行</strong>  </p>
-<p><em>注：’`’表示笔者根据eclipse定制的，’/‘表示或者，’,’表示叠加，’()’表示有或无</em>  </p>
+<p>Sublime Text 的系统自带快捷键在 Key Bindings - Default 里，<br>优先级别低于 Key Bindings - User，<br>（优先级最高的则是插件的快捷键）<br>所有的设置均在 *.sublime-keymap 文件中   </p>
+<p>此外，注意 Sublime Text 光标在快捷键下可能表示<br><strong>当前位置</strong>、<strong>当前词</strong>、<strong>当前行</strong>  </p>
+<p><em>注：’`’表示笔者根据 eclipse 定制的，’/‘表示或者，’,’表示叠加，’()’表示有或无</em>  </p>
 <h2 id="Edit">Edit</h2><h3 id="基本编辑：">基本编辑：</h3><table>
 <thead>
 <tr>
@@ -306,7 +429,7 @@
 </tr>
 </tbody>
 </table>
-<p><em>注：选中(多处)文本时：输入符号可补全头尾处；Ctrl + Shift + L可选择多处/行末尾</em>  </p>
+<p><em>注：选中(多处)文本时：输入符号可补全头尾处；Ctrl + Shift + L 可选择多处/行末尾</em>  </p>
 <hr>
 <h2 id="Find">Find</h2><table>
 <thead>
@@ -412,9 +535,9 @@
 </tbody>
 </table>
 <hr>
-<h2 id="File,_Project,_Preference,_Help">File, Project, Preference, Help</h2><p>File里的快捷键基本都是通用的，<br>如Ctrl + O, Ctrl + W, Ctrl + N, Ctrl + Shift + T…，略去<br>其他三者里的快捷键不大常用，也不大通用，亦略去  </p>
+<h2 id="File,_Project,_Preference,_Help">File, Project, Preference, Help</h2><p>File 里的快捷键基本都是通用的，<br>如 Ctrl + O, Ctrl + W, Ctrl + N, Ctrl + Shift + T…，略去<br>其他三者里的快捷键不大常用，也不大通用，亦略去  </p>
 <hr>
-<h2 id="结语">结语</h2><p>上文提及的笔者定制的快捷键（参考eclispe）  </p>
+<h2 id="结语">结语</h2><p>上文提及的笔者定制的快捷键（参考 eclispe ）  </p>
 <pre><code>[  
     { "<span class="attribute">keys</span>": <span class="value">[<span class="string">"alt+up"</span>]</span>, "<span class="attribute">command</span>": <span class="value"><span class="string">"swap_line_up"</span> </span>},  
     { "<span class="attribute">keys</span>": <span class="value">[<span class="string">"alt+down"</span>]</span>, "<span class="attribute">command</span>": <span class="value"><span class="string">"swap_line_down"</span> </span>},  
@@ -432,15 +555,14 @@
     </span>}  
 ]
 </code></pre><hr>
-<p>参考和感谢：<br>Nicholas和Chris在<a href="http://scotch.io/" target="_blank" rel="external">scotch</a>上的教程<br><a href="http://scotch.io/bar-talk/the-complete-visual-guide-to-sublime-text-3-getting-started-and-keyboard-shortcuts?utm_source=feedblitz&amp;utm_medium=FeedBlitzRss&amp;utm_campaign=scotch_io" target="_blank" rel="external">Nicholas</a><br><a href="http://scotch.io/bar-talk/sublime-text-keyboard-shortcuts" target="_blank" rel="external">Chris</a>  </p>
+<p>参考和感谢：<br>Nicholas 和 Chris 在 <a href="http://scotch.io/" target="_blank" rel="external">scotch</a> 上的教程<br><a href="http://scotch.io/bar-talk/the-complete-visual-guide-to-sublime-text-3-getting-started-and-keyboard-shortcuts?utm_source=feedblitz&amp;utm_medium=FeedBlitzRss&amp;utm_campaign=scotch_io" target="_blank" rel="external">Nicholas</a><br><a href="http://scotch.io/bar-talk/sublime-text-keyboard-shortcuts" target="_blank" rel="external">Chris</a>  </p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>title: Sublime Text 3 常用快捷键<br>date: 2014-3-26 20:09<br>categories: Tool  </p>
-<h2 id="tags:_Sublime_Text">tags: Sublime Text  </h2><p>Sublime Text 3强大的不只有插件，自带快捷键亦可圈可点，下文介绍常用快捷键   </p>
-<h2 id="摘要">摘要</h2><p>Sublime Text 3快捷键关键点：   </p>
+    <![CDATA[<p>Sublime Text 3 强大的不只有插件，自带快捷键亦可圈可点，下文介绍常用快捷键   </p>
+<h2 id="摘要">摘要</h2><p>Sublime Text 3 快捷键关键点：   </p>
 <ol>
 <li>多区域编辑与行编辑的能力   </li>
-<li>Go To与Ctrl+Shift+P   </li>
+<li>Go To 与 Ctrl + Shift + P   </li>
 <li>快捷键的管理机制   </li>
 <li>功能全面：宏、折叠、多界面等   </li>
 <li>可以使用历史记录的复制   </li>
@@ -448,149 +570,9 @@
     
     </summary>
     
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Python Subprocess with .bashrc]]></title>
-    <link href="http://luopuya.github.io/2014/03/29/Python%20Subprocess%20with%20.bashrc/"/>
-    <id>http://luopuya.github.io/2014/03/29/Python Subprocess with .bashrc/</id>
-    <published>2014-03-29T10:17:00.000Z</published>
-    <updated>2014-03-29T14:20:45.000Z</updated>
-    <content type="html"><![CDATA[<p>Python 调用 Shell 并非难事，但若要使用 .bashrc 里的配置还需……</p>
-<h2 id="摘要">摘要</h2><p>Python 调用 Bash 并使用 .bashrc 里的配置关键点： <strong>/bin/bash -i -c</strong></p>
-<a id="more"></a>
-<h2 id="解决">解决</h2><p>Python 调用 Shell 使用 subprocess 即可<br><em>（注意: 依照<a href="http://docs.python.org/2.7/library/subprocess.html#subprocess-replacements" target="_blank" rel="external">官方文档</a>，使用subprocess替换os.system, os.spawn*, os.popen*, popen2.*, commands.*）</em></p>
-<p>但直接执行 .bashrc 里的命令并不成功，原因在于默认以非交互式打开 Shell   </p>
-<p>明白了这点，也就是说执行“打开读取配置的交互 Shell”的命令即可，这话略拗口= =, 也就是执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bin/bash -i -c</span><br></pre></td></tr></table></figure></p>
-<p>例如：<br>.bashrc 里有 alias saverm=rm -i<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> subprocess <span class="keyword">as</span> sp</span><br><span class="line">sp.call(<span class="string">"/bin/bash -i -c saverm ./"</span>, shell=<span class="keyword">True</span>)</span><br><span class="line"><span class="comment"># or use Popen</span></span><br><span class="line"><span class="comment"># p = sp.Popen(["/bin/bash", "-i", "-c", "saverm ./"])</span></span><br><span class="line"><span class="comment"># p.communicate()</span></span><br></pre></td></tr></table></figure></p>
-<p>简要说明一下，call其实是封装了Popen，是同步的（等待子进程完成），<br>可参考<a href="http://www.cnblogs.com/vamei/archive/2012/09/23/2698014.html" target="_blank" rel="external">Vamei的博客</a></p>
-<p><strong>注意：暴露 shell 是相当危险的，比如在  web 下暴露可能被执行  rm 指令</strong></p>
-<p>参考并特别感谢<a href="http://stackoverflow.com/a/6857271" target="_blank" rel="external">stackoverflow的解答</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>Python 调用 Shell 并非难事，但若要使用 .bashrc 里的配置还需……</p>
-<h2 id="摘要">摘要</h2><p>Python 调用 Bash 并使用 .bashrc 里的配置关键点： <strong>/bin/bash -i -c</strong></p>]]>
+      <category term="Sublime Text" scheme="http://luopuya.github.io/tags/Sublime-Text/"/>
     
-    </summary>
-    
-      <category term=".bashrc" scheme="http://luopuya.github.io/tags/bashrc/"/>
-    
-      <category term="Python" scheme="http://luopuya.github.io/tags/Python/"/>
-    
-      <category term="Issue" scheme="http://luopuya.github.io/categories/Issue/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Linux 压缩中文文件名乱码]]></title>
-    <link href="http://luopuya.github.io/2014/03/29/Linux%20%E5%8E%8B%E7%BC%A9%E4%B8%AD%E6%96%87%E6%96%87%E4%BB%B6%E5%90%8D%E4%B9%B1%E7%A0%81/"/>
-    <id>http://luopuya.github.io/2014/03/29/Linux 压缩中文文件名乱码/</id>
-    <published>2014-03-29T09:07:00.000Z</published>
-    <updated>2014-03-29T09:24:19.000Z</updated>
-    <content type="html"><![CDATA[<p>Linux 压缩中文文件名会乱码，这让需要在多平台上学习、工作的人难以满意。  </p>
-<p>不过解决的方案还是有的，请看下文</p>
-<h2 id="摘要">摘要</h2><p>Linux 压缩中文文件名关键点：使用别的压缩工具= =</p>
-<a id="more"></a>
-<h2 id="解决">解决</h2><p>Linux 的 tar 并不保存编码集，有如下解决方式：</p>
-<h3 id="1-_使用_7zip_或_rar">1. 使用 7zip 或 rar</h3><p>7zip 安装如无权限，修改 install.sh 里的DEST_HOME<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DEST_HOME=~/.local</span><br></pre></td></tr></table></figure></p>
-<p><em>注：可参考笔者上篇博文</em></p>
-<h3 id="2-_人工/脚本转换文件名">2. 人工/脚本转换文件名</h3><p>文件内容并不会乱码，因而临时人工修改，或用脚本做映射也是权宜之计  </p>
-<hr>
-<p>参考:<br><a href="http://gm.angeldm.com/post/202" target="_blank" rel="external">观夏Note</a><br><a href="http://blog.sina.com.cn/s/blog_56a70c040101fxxz.html" target="_blank" rel="external">浆糊的BLOG</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>Linux 压缩中文文件名会乱码，这让需要在多平台上学习、工作的人难以满意。  </p>
-<p>不过解决的方案还是有的，请看下文</p>
-<h2 id="摘要">摘要</h2><p>Linux 压缩中文文件名关键点：使用别的压缩工具= =</p>]]>
-    
-    </summary>
-    
-      <category term="Linux" scheme="http://luopuya.github.io/tags/Linux/"/>
-    
-      <category term="编码" scheme="http://luopuya.github.io/tags/%E7%BC%96%E7%A0%81/"/>
-    
-      <category term="Issue" scheme="http://luopuya.github.io/categories/Issue/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Linux 无权限安装软件]]></title>
-    <link href="http://luopuya.github.io/2014/03/29/Linux%20%E6%97%A0%E6%9D%83%E9%99%90%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6/"/>
-    <id>http://luopuya.github.io/2014/03/29/Linux 无权限安装软件/</id>
-    <published>2014-03-29T09:04:00.000Z</published>
-    <updated>2014-03-29T09:32:58.000Z</updated>
-    <content type="html"><![CDATA[<p>Linux 中权限问题有时也令人郁闷，下文提供面对苦主的必杀器  </p>
-<h2 id="摘要">摘要</h2><p>Linux 无权限安装的关键点：指定用户权限的安装路径  </p>
-<a id="more"></a>
-<h2 id="解决">解决</h2><p>linux软件常常默认安装在/usr/bin之类的目录下，因而没有权限的用户只能望“错”兴叹  </p>
-<p>其实只要指定本地目录即可</p>
-<p>通常有以下三种途径：</p>
-<h3 id="1-_配置时指定">1. 配置时指定</h3><p>最常见，如nginx<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=~/.local</span><br></pre></td></tr></table></figure></p>
-<p><em>注: ./configure其实是shell脚本，根据环境生成Makefile或其他</em></p>
-<h3 id="2-_安装时指定">2. 安装时指定</h3><p>如python的包<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python setup.py --prefix=~/.local</span><br></pre></td></tr></table></figure></p>
-<h3 id="3-_修改安装的shell脚本">3. 修改安装的shell脚本</h3><p>如7zip，修改install.sh<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DEST_HOME=~/.local</span><br></pre></td></tr></table></figure></p>
-<hr>
-<p>看官对症下药，但愿药到病除</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>Linux 中权限问题有时也令人郁闷，下文提供面对苦主的必杀器  </p>
-<h2 id="摘要">摘要</h2><p>Linux 无权限安装的关键点：指定用户权限的安装路径  </p>]]>
-    
-    </summary>
-    
-      <category term="Linux" scheme="http://luopuya.github.io/tags/Linux/"/>
-    
-      <category term="Issue" scheme="http://luopuya.github.io/categories/Issue/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Python 判断汉字]]></title>
-    <link href="http://luopuya.github.io/2014/03/29/Python%20%E5%88%A4%E6%96%AD%E6%B1%89%E5%AD%97%E5%AD%97%E7%AC%A6/"/>
-    <id>http://luopuya.github.io/2014/03/29/Python 判断汉字字符/</id>
-    <published>2014-03-29T06:24:00.000Z</published>
-    <updated>2014-03-29T08:17:43.000Z</updated>
-    <content type="html"><![CDATA[<p>编码问题确实令人比较头疼：  </p>
-<ul>
-<li>本身编码方式繁多，版本亦多  </li>
-<li>python 2和3的编码差距甚大</li>
-</ul>
-<p>下文提供python中判断汉字的做法，实际中可以举一反三</p>
-<h2 id="摘要">摘要</h2><p>识别汉字关键点：用unicode范围\u4e00-\9fff判别</p>
-<a id="more"></a>
-<h2 id="解决">解决</h2><p><em>注意：全文在不特别说明的情况下均指python 3</em></p>
-<p>unicode分配给汉字的范围为<strong>4E00-9FFF</strong>（中日韩越统一表意文字）<br><em>（目前unicode6.3的标准已定义到9FCC）</em></p>
-<p>根据unicode编码区分汉字是python，java等语言的首选</p>
-<p>在python 3中，判断字符是否汉字的方法如下：  </p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">def ishan(uchar):&#10;    # for python 3.x&#10;    # Sample: ishan(&#39;&#19968;&#39;) == True, ishan(&#39;+&#39;) == False&#10;    return &#39;\u4e00&#39; &#60;= uchar &#60;= &#39;\9fff&#39; and len(uchar) == 1</span><br></pre></td></tr></table></figure>
-<p>而在python 2中则为：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">def ishan(uchar):&#10;    # for python 2.x, 3.3+&#10;    # Sample: ishan(u&#39;&#23383;&#39;) == True, ishan(u&#39;*&#39;) == False&#10;    return u&#39;\u4e00&#39; &#60;= uchar &#60;= u&#39;\9fff&#39; and len(uchar) == 1</span><br></pre></td></tr></table></figure></p>
-<h3 id="补充说明：">补充说明：</h3><ol>
-<li>ishan方法<strong>针对一个字符</strong>，如不加长度限制则仅比较首字符，即有：<em>‘\u4e00’ &lt;= ‘我&amp;你’ &lt;= ‘\u9fff’ == True, ‘\u4e00’ &lt;= ‘@蛤蛤’ &lt;= ‘\u9fff’ == False</em>  </li>
-<li>可根据需要改为针对字符串所有字符，注意第一条的提示  </li>
-<li>python 3中str的isdigit等方法都是针对所有字符的  </li>
-<li>python 3.3+ 重新支持python 2中用u表示unicode的方式   </li>
-<li>\u4e00-\u9fff不包含中文符号，如有需要可参考<a href="http://goo.gl/hyUcT7" target="_blank" rel="external">维基</a>   </li>
-<li>网上常见的\u4e00-\u9fa5写太死了，虽说目前而言后面的都是极其罕见的字  </li>
-</ol>
-<hr>
-<p>参考：<a href="http://www.unicode.org/charts/PDF/U4E00.pdf" target="_blank" rel="external">http://www.unicode.org/charts/PDF/U4E00.pdf</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>编码问题确实令人比较头疼：  </p>
-<ul>
-<li>本身编码方式繁多，版本亦多  </li>
-<li>python 2和3的编码差距甚大</li>
-</ul>
-<p>下文提供python中判断汉字的做法，实际中可以举一反三</p>
-<h2 id="摘要">摘要</h2><p>识别汉字关键点：用unicode范围\u4e00-\9fff判别</p>]]>
-    
-    </summary>
-    
-      <category term="Python" scheme="http://luopuya.github.io/tags/Python/"/>
-    
-      <category term="编码" scheme="http://luopuya.github.io/tags/%E7%BC%96%E7%A0%81/"/>
-    
-      <category term="Issue" scheme="http://luopuya.github.io/categories/Issue/"/>
+      <category term="Tool" scheme="http://luopuya.github.io/categories/Tool/"/>
     
   </entry>
   
@@ -599,57 +581,58 @@
     <link href="http://luopuya.github.io/2014/03/21/Sublime%20Text%20as%20python%20ide/"/>
     <id>http://luopuya.github.io/2014/03/21/Sublime Text as python ide/</id>
     <published>2014-03-21T09:19:00.000Z</published>
-    <updated>2014-03-30T11:41:55.000Z</updated>
-    <content type="html"><![CDATA[<p>Sublime Text是顶级的接近IDE的编辑器，插件配置至关重要，<br>以下主要针对python开发者推荐精选插件  </p>
-<h2 id="摘要">摘要</h2><p>Pythoner的Sublime Text，关键点：  </p>
+    <updated>2015-03-20T11:23:48.000Z</updated>
+    <content type="html"><![CDATA[<p>Sublime Text 是非常实用的编辑器，其中插件配置至关重要，<br>以下针对 Python 开发者推荐插件  </p>
+<p>核心插件为：  </p>
 <ul>
 <li>Anaconda  </li>
 <li>Git  </li>
-<li>Markdown Preview, MarkdownEditing</li>
+<li>Markdown Preview, MarkdownEditing  </li>
 </ul>
 <a id="more"></a>
 <h2 id="package_control">package control</h2><p><a href="https://sublime.wbond.net/installation" target="_blank" rel="external">Package Control</a> 管理插件包，下载卸载更新禁用启用一条龙服务<br>当然将插件放置包文件夹亦可安装</p>
 <h2 id="colour_theme">colour theme</h2><p><a href="https://github.com/thinkpixellab/flatland" target="_blank" rel="external">Flatland</a>，基于<a href="https://github.com/buymeasoda/soda-theme" target="_blank" rel="external">Soda</a>开发<br><img src="http://ww2.sinaimg.cn/large/734b90c7jw1eewpmxikwlj21kw11x46p.jpg" alt="Flatland screenshot"></p>
 <h2 id="sidebar">sidebar</h2><p><a href="https://github.com/titoBouzout/SideBarEnhancements" target="_blank" rel="external">SideBar Enhancements</a> 增强侧边栏项目树的功能：Open with（可定制）、重命名等、Copy as Text……<br><img src="http://ww4.sinaimg.cn/large/734b90c7jw1eewpmg6catj20ep0e8mz3.jpg" alt="Sidebar Enhancements overview"></p>
-<h2 id="git">git</h2><p><a href="https://github.com/kemayo/sublime-text-git" target="_blank" rel="external">Git</a> 即可<br><a href="https://sublime.wbond.net/packages/GitGutter" target="_blank" rel="external">GitGutter</a> 比较前后版本差别<br><a href="https://sublime.wbond.net/packages/Gist" target="_blank" rel="external">Gist</a> 使用Git的代码高亮片段  </p>
-<h2 id="ftp">ftp</h2><p><a href="http://wbond.net/sublime_packages/sftp" target="_blank" rel="external">SFTP</a>，但免费版实在没有Notepad++的NppFTP好用</p>
-<h2 id="python_ide">python ide</h2><p>Sublime Text 3下最佳的python插件当为 <a href="https://github.com/DamnWidget/anaconda" target="_blank" rel="external">Anaconda</a></p>
-<p>Anaconda是完整的python开发环境，功能包括：autocompletion, code linting, IDE features, autopep8 formating, McCabe complexity checker and Vagrant，高效而全能<br><em>(使用了Jedi, PyFlakes, pep8, PyLint, pep257 and McCabe)</em></p>
-<p>针对安装多版本python的用户，亦可为工程定制python路径和包路径  </p>
-<p>如果是Sublime Text 2，安装上文提及的<a href="https://github.com/srusskih/SublimeJEDI" target="_blank" rel="external">Jedi</a>, <a href="https://github.com/dreadatour/Flake8Lint" target="_blank" rel="external">Flake8</a>, <a href="https://github.com/dreadatour/Pep8Lint" target="_blank" rel="external">Pep8</a>即可  </p>
+<h2 id="git">git</h2><p><a href="https://github.com/kemayo/sublime-text-git" target="_blank" rel="external">Git</a> 即可<br><a href="https://sublime.wbond.net/packages/GitGutter" target="_blank" rel="external">GitGutter</a> 比较前后版本差别<br><a href="https://sublime.wbond.net/packages/Gist" target="_blank" rel="external">Gist</a> 使用 Git 的代码高亮片段  </p>
+<h2 id="ftp">ftp</h2><p><a href="http://wbond.net/sublime_packages/sftp" target="_blank" rel="external">SFTP</a>，但免费版实在没有 Notepad++ 的 NppFTP 好用</p>
+<h2 id="python_ide">python ide</h2><p>Sublime Text 3 下最佳的 Python 插件当为 <a href="https://github.com/DamnWidget/anaconda" target="_blank" rel="external">Anaconda</a></p>
+<p>Anaconda 是完整的 python 开发环境，功能包括：autocompletion, code linting, IDE features, autopep8 formating, McCabe complexity checker and Vagrant，高效而全能<br><em>(使用了 Jedi, PyFlakes, pep8, PyLint, pep257 and McCabe )</em></p>
+<p>针对安装多版本 Python 的用户，亦可为工程定制 Python 路径和包路径  </p>
+<p>如果是 Sublime Text 2，需要分别安装上文提及的<a href="https://github.com/srusskih/SublimeJEDI" target="_blank" rel="external">Jedi</a>, <a href="https://github.com/dreadatour/Flake8Lint" target="_blank" rel="external">Flake8</a>, <a href="https://github.com/dreadatour/Pep8Lint" target="_blank" rel="external">Pep8</a>  </p>
 <p>如需调试(<strong>pdb</strong>)或交互式测试（<strong>python -i</strong>），可使用<a href="https://github.com/wuub/SublimeREPL" target="_blank" rel="external">SublimeREPL</a><br>交互式测试通过定制快捷键实现，参考自<a href="http://stackoverflow.com/a/14080562" target="_blank" rel="external">Stackoverflow</a>  </p>
-<p>添加至user keybindings</p>
+<p>添加至 user keybindings</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        "<span class="attribute">keys</span>": <span class="value">[<span class="string">"super+shift+r"</span>]</span>,</span><br><span class="line">        "<span class="attribute">caption</span>": <span class="value"><span class="string">"Python"</span></span>,</span><br><span class="line">        "<span class="attribute">command</span>": <span class="value"><span class="string">"repl_open"</span></span>, </span><br><span class="line">        "<span class="attribute">mnemonic</span>": <span class="value"><span class="string">"p"</span></span>,</span><br><span class="line">        "<span class="attribute">args</span>": <span class="value">&#123;</span><br><span class="line">            "<span class="attribute">type</span>": <span class="value"><span class="string">"subprocess"</span></span>,</span><br><span class="line">            "<span class="attribute">encoding</span>": <span class="value"><span class="string">"utf8"</span></span>,</span><br><span class="line">            "<span class="attribute">cmd</span>": <span class="value">[<span class="string">"python"</span>, <span class="string">"-i"</span>, <span class="string">"-u"</span>, <span class="string">"$file"</span>]</span>,</span><br><span class="line">            "<span class="attribute">cwd</span>": <span class="value"><span class="string">"$file_path"</span></span>,</span><br><span class="line">            "<span class="attribute">syntax</span>": <span class="value"><span class="string">"Packages/Python/Python.tmLanguage"</span></span>,</span><br><span class="line">            "<span class="attribute">external_id</span>": <span class="value"><span class="string">"python"</span></span><br><span class="line">        </span>&#125; </span><br><span class="line">    </span>&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<p>但交互式下就没有补全功能了（相当于Notepad++用NppExec或PyNpp的能力），这方面不如IDLE和Ipython。(命令行应该能改成类似的<em>ipython -i</em>，但暂时未研究)</p>
-<p>另外仅以pyhton而言，Jedi的补全效果比 <a href="https://github.com/SublimeCodeIntel/SublimeCodeIntel" target="_blank" rel="external">SublimeCodeIntel</a> 略好，且简易性完爆之<br><img src="http://ww1.sinaimg.cn/large/734b90c7jw1eewpn9wh73g20ee03naa0.gif" alt="SublimeJEDI overview"><br><img src="http://ww1.sinaimg.cn/large/734b90c7jw1eewpnjx6umg20ee04wq2x.gif" alt="SublimeJEDI overview2"></p>
+<p>但交互式下就没有补全功能了（相当于 Notepad++ 用 NppExec 或 PyNpp 的能力），这方面不如 IDLE 和 Ipython 。(命令行应该能改成类似的 <em>ipython -i</em> ，但暂时未研究)</p>
+<p>另外仅以 Pyhton 而言，Jedi 的补全效果比 <a href="https://github.com/SublimeCodeIntel/SublimeCodeIntel" target="_blank" rel="external">SublimeCodeIntel</a> 略好，且简易性完爆之<br><img src="http://ww1.sinaimg.cn/large/734b90c7jw1eewpn9wh73g20ee03naa0.gif" alt="SublimeJEDI overview"><br><img src="http://ww1.sinaimg.cn/large/734b90c7jw1eewpnjx6umg20ee04wq2x.gif" alt="SublimeJEDI overview2"></p>
 <h2 id="markdown">markdown</h2><p><a href="https://github.com/revolunet/sublimetext-markdown-preview" target="_blank" rel="external">Markdown Preview</a>，编译、预览</p>
 <p><a href="https://github.com/SublimeText-Markdown/MarkdownEditing" target="_blank" rel="external">MarkdownEditing</a>，快捷键、高亮增强<br><img src="http://ww2.sinaimg.cn/large/734b90c7jw1eewpntu5hkj20k90kiwgf.jpg" alt="MarkdownEditing overview"></p>
-<h2 id="todolist">todolist</h2><p><a href="https://github.com/poritsky/PlainTasksOF" target="_blank" rel="external">PlainTasks OF</a>，OmniFocus风格的<a href="https://github.com/aziz/PlainTasks" target="_blank" rel="external">PlainTasks</a><br>功能包括：任务+归档，链接文件并定位<br><img src="http://ww3.sinaimg.cn/large/734b90c7jw1eewpo4wxnjj20js0itwhc.jpg" alt="PlainTasks OF overview">  </p>
-<h2 id="小结">小结</h2><p>总的来说ST3与ST2相比，差别不大<br>好处有：  </p>
+<h2 id="todolist">todolist</h2><p><a href="https://github.com/poritsky/PlainTasksOF" target="_blank" rel="external">PlainTasks OF</a>，OmniFocus 风格的<a href="https://github.com/aziz/PlainTasks" target="_blank" rel="external">PlainTasks</a><br>功能包括：任务 + 归档，链接文件并定位<br><img src="http://ww3.sinaimg.cn/large/734b90c7jw1eewpo4wxnjj20js0itwhc.jpg" alt="PlainTasks OF overview">  </p>
+<h2 id="小结">小结</h2><p>总的来说 ST3 与 ST2 相比，差别不大  </p>
+<p>优点有：  </p>
 <ul>
 <li>用户安装的包分开，便于查看管理  </li>
 <li>开启速度快  </li>
 </ul>
-<p>坏处有：  </p>
+<p>不足有：  </p>
 <ul>
 <li>默认包已压缩，修改麻烦，但可通过禁止默认语言包，选择部分安装增强版<a href="https://www.google.com.hk/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;ved=0CCgQFjAA&amp;url=%68%74%74%70%73%3a%2f%2f%67%69%74%68%75%62%2e%63%6f%6d%2f%66%61%63%65%6c%65%73%73%75%73%65%72%2f%73%75%62%6c%69%6d%65%2d%6c%61%6e%67%75%61%67%65%73&amp;ei=EVYsU6WWK4PCkwWCpoH4BA&amp;usg=AFQjCNHIuoi_n3FABhR-2mCU4r00XjWYBw" target="_blank" rel="external">Sublime Languages</a>  </li>
 </ul>
-<p>推荐ST3吧，毕竟这些插件迁移不难，好东西多半还是会迁到ST3的吧</p>
+<p>推荐 ST3 吧，毕竟这些插件迁移不难，好东西多半还是会迁到 ST3 的吧</p>
 <hr>
 <p>参考并特别感谢：  </p>
 <ul>
 <li>所有开发者  </li>
-<li><a href="http://lucifr.com/tags/sublime-text/" target="_blank" rel="external">Lufir关于Sublime Text的博客</a>  </li>
-<li><a href="http://screamingatmyscreen.com/2013/9/sublime-text-as-python-ide-jedi/" target="_blank" rel="external">Timo的SublimeJEDI效果图</a></li>
+<li><a href="http://lucifr.com/tags/sublime-text/" target="_blank" rel="external">Lufir 关于 Sublime Text 的博客</a>  </li>
+<li><a href="http://screamingatmyscreen.com/2013/9/sublime-text-as-python-ide-jedi/" target="_blank" rel="external">Timo 的 SublimeJEDI 效果图</a></li>
 </ul>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>Sublime Text是顶级的接近IDE的编辑器，插件配置至关重要，<br>以下主要针对python开发者推荐精选插件  </p>
-<h2 id="摘要">摘要</h2><p>Pythoner的Sublime Text，关键点：  </p>
+    <![CDATA[<p>Sublime Text 是非常实用的编辑器，其中插件配置至关重要，<br>以下针对 Python 开发者推荐插件  </p>
+<p>核心插件为：  </p>
 <ul>
 <li>Anaconda  </li>
 <li>Git  </li>
-<li>Markdown Preview, MarkdownEditing</li>
+<li>Markdown Preview, MarkdownEditing  </li>
 </ul>]]>
     
     </summary>
@@ -665,15 +648,15 @@
     <link href="http://luopuya.github.io/2014/03/21/%E6%94%B9%E9%80%A0%20cmd%20%E6%88%90%20shell/"/>
     <id>http://luopuya.github.io/2014/03/21/改造 cmd 成 shell/</id>
     <published>2014-03-21T06:35:00.000Z</published>
-    <updated>2014-03-29T08:47:45.000Z</updated>
-    <content type="html"><![CDATA[<p>Windows下的cmd不太好用，以下将其增强部分*nix的shell功能</p>
-<h2 id="摘要">摘要</h2><p>将cmd改造成shell，关键点：  </p>
+    <updated>2015-03-20T11:16:57.000Z</updated>
+    <content type="html"><![CDATA[<p>Windows 下的 cmd 不太好用，以下将其增强部分 *nix 的 shell 功能</p>
+<h2 id="摘要">摘要</h2><p>将 cmd 改造成 shell，关键点：  </p>
 <ul>
 <li>Gow</li>
 <li>Clink  </li>
 </ul>
 <a id="more"></a>
-<h2 id="Gow">Gow</h2><p><a href="https://github.com/bmatzelle/gow" target="_blank" rel="external">Gow</a>是Cygwin的轻量级替代品，封装了130多个开源工具和*nix命令（编译成exe），常用的有：  </p>
+<h2 id="Gow">Gow</h2><p><a href="https://github.com/bmatzelle/gow" target="_blank" rel="external">Gow</a> 是 Cygwin 的轻量级替代品，封装了 130 多个开源工具和 *nix 命令（编译成 exe ），常用的有：  </p>
 <ul>
 <li>Shell ： bash , zsh</li>
 <li>压缩工具： gzip, zip, bzip2, compress</li>
@@ -685,15 +668,15 @@
 <li>文件工具： mv, cp, du, ls, pwd, rmdir, whereis</li>
 <li>开发工具： make, <strong>diff</strong>, diff3, sleep, cvs, dos2unix, unix2dos</li>
 </ul>
-<p>（上述列表来自<a href="http://www.oschina.net/question/12_10312" target="_blank" rel="external">oschina的Gow说明</a>）<br>下载并安装即可，环境变量会自动设置，并且可往/bin添加新的exe  </p>
-<h2 id="Clink">Clink</h2><p><a href="http://mridgers.github.io/clink/" target="_blank" rel="external">Clink</a>是cmd增强工具，最amazing的功能为：     </p>
+<p>（上述列表来自<a href="http://www.oschina.net/question/12_10312" target="_blank" rel="external">oschina 的 Gow 说明</a>）<br>下载并安装即可，环境变量会自动设置，并且可往/bin添加新的exe  </p>
+<h2 id="Clink">Clink</h2><p><a href="http://mridgers.github.io/clink/" target="_blank" rel="external">Clink</a> 是 cmd 增强工具，功能强大：   </p>
 <h3 id="Tab补全">Tab补全</h3><ul>
 <li>路径补全  </li>
-<li>PATH下的可执行文件  </li>
+<li>PATH 下的可执行文件  </li>
 <li>环境变量  </li>
 </ul>
-<p>更关键的是补全形式为显示列表，而非cmd和PowerShell里的逐个蹦<br><img src="http://ww3.sinaimg.cn/large/734b90c7jw1eewphsj8l0j20ee053dgd.jpg" alt="列表补全效果示意图">  </p>
-<h3 id="GNU_readline">GNU readline</h3><p><a href="http://cnswww.cns.cwru.edu/php/chet/readline/rluserman.html" target="_blank" rel="external">GNU readline</a>让cmd拥有bash的编辑和定制的能力： </p>
+<p>更关键的是补全形式为显示列表，而非 cmd 和 PowerShell 里的逐个蹦<br><img src="http://ww3.sinaimg.cn/large/734b90c7jw1eewphsj8l0j20ee053dgd.jpg" alt="列表补全效果示意图">  </p>
+<h3 id="GNU_readline">GNU readline</h3><p><a href="http://cnswww.cns.cwru.edu/php/chet/readline/rluserman.html" target="_blank" rel="external">GNU readline</a> 让 cmd 拥有 bash 的编辑和定制的能力： </p>
 <ul>
 <li>Ctrl-R, Ctrl-S (逆序)搜索历史命令</li>
 <li>Ctrl-A, Ctrl-S 到行首/尾</li>
@@ -705,29 +688,27 @@
 <li>跨会话（Sessions）的保存  </li>
 <li>更多快捷键<ul>
 <li>Ctrl-V 复制    </li>
-<li>Ctrl-Z 撤销/Undo  </li>
+<li>Ctrl-Z 撤销 /Undo  </li>
 <li>(Alt-H 查看更多快捷键……)</li>
 </ul>
 </li>
 <li>……  </li>
 </ul>
-<p>设置cmd的autorun仅需：<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clink autorun -i</span><br></pre></td></tr></table></figure></p>
+<p>设置 cmd 的 autorun 仅需：<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clink autorun -i</span><br></pre></td></tr></table></figure></p>
 <h2 id="已知Bug">已知Bug</h2><ul>
-<li>*nix下ls默认ascii编码，Windows文件名编码为GBK（cp936），固ls时中文不显示，建议可补充使用dir  </li>
+<li>*nix 下 ls 默认 ascii 编码，而 Windows 文件名编码为 GBK（cp936），固 ls 时中文不显示，建议可补充使用 dir   </li>
 </ul>
-<h2 id="另一套方案：Gow+PowerShell">另一套方案：Gow+PowerShell</h2><p>PowerShell诞生于2006年，在较新的Windows系统中均已自带。<br>除了无需安装之外，PowerShell功能强大但占用内存稍大（40M比1M）<br>缺点是没有Clink强大的补全等功能  </p>
-<p>其它诸如Console2, Cmder经尝试不推荐</p>
-<h2 id="小结">小结</h2><p>使用Gow和Clink，使得cmd最薄弱的命令、补全和编辑功能得到补充。  </p>
+<h2 id="小结">小结</h2><p>使用 Gow 和 Clink ，使得 cmd 最薄弱的命令、补全和编辑功能得到补充。  </p>
 <hr>
 <p>参考并特别感谢：  </p>
 <ul>
-<li>开发者bmatzelle和mridgers  </li>
-<li><a href="http://www.hanselman.com/blog/MakingABetterSomewhatPrettierButDefinitelyMoreFunctionalWindowsCommandLine.aspx" target="_blank" rel="external">Scott的“better cmd”</a>及<a href="http://blogs.msdn.com/b/scott_hanselman/archive/2013/07/31/windows.aspx" target="_blank" rel="external">中文版</a></li>
+<li>开发者 bmatzelle 和 mridgers  </li>
+<li><a href="http://www.hanselman.com/blog/MakingABetterSomewhatPrettierButDefinitelyMoreFunctionalWindowsCommandLine.aspx" target="_blank" rel="external">Scott 的“ better cmd ”</a>及<a href="http://blogs.msdn.com/b/scott_hanselman/archive/2013/07/31/windows.aspx" target="_blank" rel="external">中文版</a></li>
 </ul>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>Windows下的cmd不太好用，以下将其增强部分*nix的shell功能</p>
-<h2 id="摘要">摘要</h2><p>将cmd改造成shell，关键点：  </p>
+    <![CDATA[<p>Windows 下的 cmd 不太好用，以下将其增强部分 *nix 的 shell 功能</p>
+<h2 id="摘要">摘要</h2><p>将 cmd 改造成 shell，关键点：  </p>
 <ul>
 <li>Gow</li>
 <li>Clink  </li>
@@ -746,51 +727,83 @@
     <link href="http://luopuya.github.io/2013/11/29/Ubuntu%20%E5%AE%89%E8%A3%85%E5%90%8E%E7%9A%84%20Todolist/"/>
     <id>http://luopuya.github.io/2013/11/29/Ubuntu 安装后的 Todolist/</id>
     <published>2013-11-29T15:27:00.000Z</published>
-    <updated>2014-12-09T06:39:19.000Z</updated>
-    <content type="html"><![CDATA[<p>Ubuntu 12.04 64-bit桌面版简单配置，以下为todolist</p>
-<h2 id="摘要">摘要</h2><p>安装Ubuntu后的todolist，关键点：  </p>
+    <updated>2015-03-20T11:14:17.000Z</updated>
+    <content type="html"><![CDATA[<p>Ubuntu 12.04 64-bit 桌面版简单配置，以下为 todolist</p>
+<h2 id="摘要">摘要</h2><p>安装 Ubuntu 后的 todolist，关键点：  </p>
 <ol>
-<li>修改软件源，用aptitude统一管理软件  </li>
+<li>修改软件源，用 aptitude 统一管理软件  </li>
 <li>按需设置代理  </li>
 <li>配置自己的环境变量、别名    </li>
 </ol>
 <a id="more"></a>
-<h2 id="安装虚拟机工具">安装虚拟机工具</h2><p>以VMware为例：  </p>
+<h2 id="安装虚拟机工具">安装虚拟机工具</h2><p>以 VMware 为例：  </p>
 <ol>
-<li>点击【虚拟机】-&gt;【安装VMware工具】  </li>
-<li>将压缩包拖至~/download，后用tar解压  </li>
-<li>运行vmware-install.pl，以默认配置即可（全回车）  </li>
+<li>点击 <strong>【虚拟机】-&gt;【安装VMware工具】</strong>  </li>
+<li>将压缩包拖至 ~/download，后用 tar 解压  </li>
+<li>运行 vmware-install.pl，以默认配置即可（全回车）  </li>
 </ol>
-<h2 id="设置root密码">设置root密码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo passwd root</span><br></pre></td></tr></table></figure>
-<h2 id="修改软件源">修改软件源</h2><p>打开Ubuntu软件中心，并点击【编辑】-&gt;【软件源】  </p>
+<h2 id="设置_root_密码">设置 root 密码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo passwd root</span><br></pre></td></tr></table></figure>
+<h2 id="修改软件源">修改软件源</h2><p>打开 Ubuntu 软件中心，并点击 <strong>【编辑】-&gt;【软件源】</strong>   </p>
 <ol>
-<li><p><strong>设置常规软件源</strong><br>从<strong>下载自</strong>中选择一个中国的服务器即可  </p>
+<li><p><strong>设置常规软件源</strong><br>从 <strong>下载自</strong> 中选择一个中国的服务器即可  </p>
 </li>
-<li><p><strong>添加额外软件源</strong><br>点击【其它软件】-&gt;【添加】<br>通常添加deb或ppa：<br>如需chrome，输入deb <a href="http://dl.google.com/linux/chrome/deb/" target="_blank" rel="external">http://dl.google.com/linux/chrome/deb/</a> stable main<br>如需oracle jdk，输入ppa:webupd8team/java<br>see more[<a href="https://launchpad.net/~webupd8team/+archive/ubuntu/java" target="_blank" rel="external">https://launchpad.net/~webupd8team/+archive/ubuntu/java</a>]<br>如需vim7.4，输入ppa:fcwu-tw/ppa  </p>
+<li><p><strong>添加额外软件源</strong><br>点击 <strong>【其它软件】-&gt;【添加】</strong><br>通常添加 deb 或 ppa：<br>如需 chrome，输入 deb <a href="http://dl.google.com/linux/chrome/deb/" target="_blank" rel="external">http://dl.google.com/linux/chrome/deb/</a> stable main<br>如需 oracle jdk，输入 ppa:webupd8team/java<br>see more[<a href="https://launchpad.net/~webupd8team/+archive/ubuntu/java" target="_blank" rel="external">https://launchpad.net/~webupd8team/+archive/ubuntu/java</a>]<br>如需 vim7.4，输入 ppa:fcwu-tw/ppa  </p>
 </li>
 </ol>
-<p>所做的修改其实均在/etc/apt下：<br>修改的服务器源在/etc/apt/sources.list文件中<br>添加的软件源在/etc/apt/sources.list.d文件夹里  </p>
-<p>添加ppa也可以如下方式：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:webupd8team/java</span><br></pre></td></tr></table></figure></p>
-<h2 id="设置中文">设置中文</h2><p>打开系统设置，并点击【语言支持】<br>从<strong>添加或删除语言</strong>中选择<strong>简体中文</strong>，后将其拖至列表首，并点击<strong>应用至整个系统</strong>即可<br>依照提示安装需要的语言包</p>
-<h2 id="安装aptitude">安装aptitude</h2><p>与apt-get相比，aptitude命令统一，更友好<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install aptitude</span><br></pre></td></tr></table></figure></p>
-<h2 id="设置代理">设置代理</h2><h3 id="VPN代理">VPN代理</h3><p>在右上方点开网络设置，点击【VPN连接】-&gt;【配置VPN】<br>添加并编辑VPN<br>最后设置【VPN】-&gt;【高级】-&gt;【使用点到点加密】（很重要）  </p>
+<p>所做的修改其实均在 /etc/apt 下：<br>修改的服务器源在 /etc/apt/sources.list 文件中<br>添加的软件源在 /etc/apt/sources.list.d 文件夹里  </p>
+<p>添加 ppa 也可以如下方式：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:webupd8team/java</span><br></pre></td></tr></table></figure></p>
+<h2 id="设置中文">设置中文</h2><p>打开系统设置，并点击 <strong>【语言支持】</strong><br>从 <strong>添加或删除语言</strong> 中选择 <strong>简体中文</strong> ，后将其拖至列表首，并点击 <strong>应用至整个系统</strong> 即可<br>依照提示安装需要的语言包</p>
+<h2 id="安装_aptitude">安装 aptitude</h2><p>与 apt-get 相比，aptitude 命令统一，更友好<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install aptitude</span><br></pre></td></tr></table></figure></p>
+<h2 id="设置代理">设置代理</h2><h3 id="VPN_代理">VPN 代理</h3><p>在右上方点开网络设置，点击 <strong>【VPN连接】-&gt;【配置VPN】</strong><br>添加并编辑 VPN<br>最后设置 <strong>【VPN】-&gt;【高级】-&gt;【使用点到点加密】</strong>（很重要）  </p>
 <h3 id="普通代理">普通代理</h3><p>可将代理地址和端口写入自己的环境变量<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gedit ~/.bashrc</span><br></pre></td></tr></table></figure></p>
-<p>添加（以goagent代理为例）<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># add for proxy&#10;export http_proxy=http://127.0.0.1:8087&#10;export https_proxy=http://127.0.0.1:8087&#10;export ftp_proxy=http://127.0.0.1:8087</span><br></pre></td></tr></table></figure></p>
+<p>添加（以 goagent 代理为例）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># add for proxy</span></span><br><span class="line"><span class="built_in">export</span> http_proxy=http://<span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">8087</span></span><br><span class="line"><span class="built_in">export</span> https_proxy=http://<span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">8087</span></span><br><span class="line"><span class="built_in">export</span> ftp_proxy=http://<span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">8087</span></span><br></pre></td></tr></table></figure></p>
 <p>要使环境变量生效，新开终端或输入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure></p>
-<p>当然也可以临时在终端输入export指令</p>
+<p>当然也可以临时在终端输入 export 指令</p>
 <hr>
-<p>以上完成后，可选择升级已有软件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo aptitude update  </span><br><span class="line">sudo aptitude upgrade</span><br></pre></td></tr></table></figure></p>
-<h2 id="总结">总结</h2><p>至此简单形成以aptitude统一管理软件的环境，常用指令有：<br>更新（<strong>update</strong>） 安装（<strong>install</strong>） 卸载（<strong>remove</strong>） 升级（<strong>upgrade</strong>） 查找（<strong>search</strong>）<br>自己的环境变量、别名记在<strong>~/.bashrc</strong>：  </p>
+<p>以上完成后，可选择升级已有软件  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo aptitude update  </span><br><span class="line">sudo aptitude upgrade</span><br></pre></td></tr></table></figure>
+<h2 id="总结">总结</h2><p>至此简单形成以 aptitude 统一管理软件的环境，常用指令有：  </p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">功能</th>
+<th style="text-align:center">指令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">更新</td>
+<td style="text-align:center"><strong>update</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">安装</td>
+<td style="text-align:center"><strong>install</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">卸载</td>
+<td style="text-align:center"><strong>remove</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">升级</td>
+<td style="text-align:center"><strong>upgrade</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">查找</td>
+<td style="text-align:center"><strong>search</strong></td>
+</tr>
+</tbody>
+</table>
+<p>自己的环境变量、别名记在 <strong>~/.bashrc</strong> ：  </p>
 <ol>
 <li>环境变量（export）  </li>
 <li>别名/快捷方式（alias）  </li>
 </ol>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>Ubuntu 12.04 64-bit桌面版简单配置，以下为todolist</p>
-<h2 id="摘要">摘要</h2><p>安装Ubuntu后的todolist，关键点：  </p>
+    <![CDATA[<p>Ubuntu 12.04 64-bit 桌面版简单配置，以下为 todolist</p>
+<h2 id="摘要">摘要</h2><p>安装 Ubuntu 后的 todolist，关键点：  </p>
 <ol>
-<li>修改软件源，用aptitude统一管理软件  </li>
+<li>修改软件源，用 aptitude 统一管理软件  </li>
 <li>按需设置代理  </li>
 <li>配置自己的环境变量、别名    </li>
 </ol>]]>

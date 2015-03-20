@@ -1,0 +1,1176 @@
+<!doctype html>
+<html class="theme-next use-motion">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+  <meta name="google-site-verification" content="VvyjvVXcJQa0QklHipu6pwm2PJGnnchIqX7s5JbbT_0" />
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.3.0"/>
+
+
+    <meta name="description" content="Even If You Walk and Walk" />
+
+
+
+	<meta name="keywords" content="Sublime Text," />
+
+  <title> Sublime Text 3 常用快捷键 // luopuya's blog </title>
+</head>
+
+<body>
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+    <a href="/" class="brand">
+        <span class="logo">
+          <i class="icon-logo"></i>
+        </span>
+        <span class="site-title">luopuya's blog</span>
+    </a>
+</h1>
+
+
+  <ul id="menu" class="menu">
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首页
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          标签
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+            
+          
+
+          <div id="posts" class="posts-expand">
+            
+  
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Sublime Text 3 常用快捷键
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2014-03-26
+          
+        </span>
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2014/03/26/Sublime Text 3 常用快捷键/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2014/03/26/Sublime Text 3 常用快捷键/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          <p>Sublime Text 3 强大的不只有插件，自带快捷键亦可圈可点，下文介绍常用快捷键   </p>
+<h2 id="摘要">摘要</h2><p>Sublime Text 3 快捷键关键点：   </p>
+<ol>
+<li>多区域编辑与行编辑的能力   </li>
+<li>Go To 与 Ctrl + Shift + P   </li>
+<li>快捷键的管理机制   </li>
+<li>功能全面：宏、折叠、多界面等   </li>
+<li>可以使用历史记录的复制   </li>
+</ol>
+<a id="more"></a>  
+<p>Sublime Text 的系统自带快捷键在 Key Bindings - Default 里，<br>优先级别低于 Key Bindings - User，<br>（优先级最高的则是插件的快捷键）<br>所有的设置均在 *.sublime-keymap 文件中   </p>
+<p>此外，注意 Sublime Text 光标在快捷键下可能表示<br><strong>当前位置</strong>、<strong>当前词</strong>、<strong>当前行</strong>  </p>
+<p><em>注：’`’表示笔者根据 eclipse 定制的，’/‘表示或者，’,’表示叠加，’()’表示有或无</em>  </p>
+<h2 id="Edit">Edit</h2><h3 id="基本编辑：">基本编辑：</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">Commands</th>
+<th style="text-align:left">Keys  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">  Undo/Redo</td>
+<td style="text-align:left">Ctrl + Z/Y   </td>
+</tr>
+<tr>
+<td style="text-align:left">  软撤销</td>
+<td style="text-align:left">Ctrl + U   </td>
+</tr>
+<tr>
+<td style="text-align:left">  Copy/Paste</td>
+<td style="text-align:left">Ctrl + C/V   </td>
+</tr>
+<tr>
+<td style="text-align:left">  选择过往复制</td>
+<td style="text-align:left">Ctrl + K, Ctrl + V   </td>
+</tr>
+<tr>
+<td style="text-align:left">  插入新上/下行并跳转</td>
+<td style="text-align:left">Ctrl (+ Shift) + Enter   </td>
+</tr>
+<tr>
+<td style="text-align:left">  删除前/后词</td>
+<td style="text-align:left">Ctrl + Backspace/Delete   </td>
+</tr>
+<tr>
+<td style="text-align:left">  删除至行首/尾</td>
+<td style="text-align:left">Ctrl+ K, Ctrl + Backspace/K   </td>
+</tr>
+<tr>
+<td style="text-align:left">  跳转至前/后词</td>
+<td style="text-align:left">Ctrl/Alt + ←/→   </td>
+</tr>
+<tr>
+<td style="text-align:left">  补全</td>
+<td style="text-align:left">Tab   </td>
+</tr>
+<tr>
+<td style="text-align:left">  提示补全</td>
+<td style="text-align:left">`Alt+/   </td>
+</tr>
+<tr>
+<td style="text-align:left">  删除Tab指定宽度</td>
+<td style="text-align:left">Shift + Tab   </td>
+</tr>
+<tr>
+<td style="text-align:left">  转换大/小写</td>
+<td style="text-align:left">`Ctrl + Shift + X/Y   </td>
+</tr>
+</tbody>
+</table>
+<h3 id="(多)行/块编辑：">(多)行/块编辑：</h3><p><em>注：这些快捷键把光标理解为当前行；此处的块指选定文本，非语句块</em>  </p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Commands</th>
+<th style="text-align:left">Keys  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">  (去)行/块注释</td>
+<td style="text-align:left">Ctrl + /   </td>
+</tr>
+<tr>
+<td style="text-align:left">  选择行</td>
+<td style="text-align:left">Ctrl + L   </td>
+</tr>
+<tr>
+<td style="text-align:left">  删除行/块</td>
+<td style="text-align:left">Ctrl + X   </td>
+</tr>
+<tr>
+<td style="text-align:left">  向上/下交换行</td>
+<td style="text-align:left">`Alt + ↑/↓   </td>
+</tr>
+<tr>
+<td style="text-align:left">  复制行</td>
+<td style="text-align:left">Ctrl + Shift + D   </td>
+</tr>
+<tr>
+<td style="text-align:left">  合并下行</td>
+<td style="text-align:left">Ctrl + J   </td>
+</tr>
+<tr>
+<td style="text-align:left">  (去)缩进</td>
+<td style="text-align:left">Ctrl + [/]   </td>
+</tr>
+</tbody>
+</table>
+<p><em>注：Ctrl + X 和 Shift + Delete 在删除的同时复制到剪贴板</em>  </p>
+<h3 id="代码折叠：">代码折叠：</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">Commands</th>
+<th style="text-align:left">Keys  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">  折叠到1/2…级</td>
+<td style="text-align:left">Ctrl + K, Ctrl + 1/2…   </td>
+</tr>
+<tr>
+<td style="text-align:left">  展开全部</td>
+<td style="text-align:left">Ctrl + K, Ctrl + J   </td>
+</tr>
+<tr>
+<td style="text-align:left">  折叠/展开</td>
+<td style="text-align:left">Ctrl + Shift + [/]   </td>
+</tr>
+</tbody>
+</table>
+<h3 id="书签：">书签：</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">Commands</th>
+<th style="text-align:left">Keys  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">  (取消)添加书签</td>
+<td style="text-align:left">Ctrl + F2   </td>
+</tr>
+<tr>
+<td style="text-align:left">  上/下一处书签</td>
+<td style="text-align:left">(Shift +) F2   </td>
+</tr>
+<tr>
+<td style="text-align:left">  删除所有书签</td>
+<td style="text-align:left">Ctrl + Shift + F2   </td>
+</tr>
+</tbody>
+</table>
+<h2 id="Selection">Selection</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">Commands</th>
+<th style="text-align:left">Keys  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">  无限制多处选择</td>
+<td style="text-align:left">Ctrl + 左键   </td>
+</tr>
+<tr>
+<td style="text-align:left">  同时选择上/下行同一位置</td>
+<td style="text-align:left">Ctrl + Alt + ↑/↓   </td>
+</tr>
+<tr>
+<td style="text-align:left">  同时选择多行同一位置</td>
+<td style="text-align:left">Shift + 右键   </td>
+</tr>
+<tr>
+<td style="text-align:left">  选择下个相同词</td>
+<td style="text-align:left">Ctrl + D  </td>
+</tr>
+<tr>
+<td style="text-align:left">  跳过当前，选择下个相同词</td>
+<td style="text-align:left">Ctrl + K, Ctrl + D   </td>
+</tr>
+<tr>
+<td style="text-align:left">  选择所有相同词</td>
+<td style="text-align:left">Ctrl + F, Alt + Enter   </td>
+</tr>
+<tr>
+<td style="text-align:left">  选择至前/后词</td>
+<td style="text-align:left">Ctrl/Alt (+ Shift) + ←/→   </td>
+</tr>
+<tr>
+<td style="text-align:left">  选择括号内</td>
+<td style="text-align:left">Ctrl + Shift + M   </td>
+</tr>
+<tr>
+<td style="text-align:left">  选择至同一缩进</td>
+<td style="text-align:left">Ctrl + Shift + J   </td>
+</tr>
+</tbody>
+</table>
+<p><em>注：选中(多处)文本时：输入符号可补全头尾处；Ctrl + Shift + L 可选择多处/行末尾</em>  </p>
+<hr>
+<h2 id="Find">Find</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">Commands</th>
+<th style="text-align:left">Keys  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">  (反向)查找</td>
+<td style="text-align:left">(Shift +) F3  </td>
+</tr>
+<tr>
+<td style="text-align:left">  (所有文件)查找</td>
+<td style="text-align:left">Ctrl (+ Shift) + F  </td>
+</tr>
+<tr>
+<td style="text-align:left">  替换</td>
+<td style="text-align:left">Ctrl + H  </td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="View">View</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">Commands</th>
+<th style="text-align:left">Keys  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">  全屏</td>
+<td style="text-align:left">F11   </td>
+</tr>
+<tr>
+<td style="text-align:left">  勿打扰模式</td>
+<td style="text-align:left">Shift + F11   </td>
+</tr>
+<tr>
+<td style="text-align:left">  多列分屏</td>
+<td style="text-align:left">Shift + Alt + 1/2/3/4  </td>
+</tr>
+<tr>
+<td style="text-align:left">  选择标签页</td>
+<td style="text-align:left">Alt + 1/2…   </td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="Go_To">Go To</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">Commands</th>
+<th style="text-align:left">Keys  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">  Go To 文件</td>
+<td style="text-align:left">Ctrl + P   </td>
+</tr>
+<tr>
+<td style="text-align:left">  Go To 行号</td>
+<td style="text-align:left">Ctrl + G   </td>
+</tr>
+<tr>
+<td style="text-align:left">  Go To (所有文件)符号</td>
+<td style="text-align:left">Ctrl (+ Shift) + R   </td>
+</tr>
+<tr>
+<td style="text-align:left">  Go To 对应括号</td>
+<td style="text-align:left">Ctrl + M   </td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="Tools">Tools</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">Commands</th>
+<th style="text-align:left">Keys  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">  命令行</td>
+<td style="text-align:left">Ctrl + Shift + P  </td>
+</tr>
+<tr>
+<td style="text-align:left">  编译/运行</td>
+<td style="text-align:left">Ctrl (+ Shift) + B  </td>
+</tr>
+<tr>
+<td style="text-align:left">  (停止)录制宏</td>
+<td style="text-align:left">Ctrl + Q  </td>
+</tr>
+<tr>
+<td style="text-align:left">  运行宏</td>
+<td style="text-align:left">Ctrl + Shift + Q  </td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="File,_Project,_Preference,_Help">File, Project, Preference, Help</h2><p>File 里的快捷键基本都是通用的，<br>如 Ctrl + O, Ctrl + W, Ctrl + N, Ctrl + Shift + T…，略去<br>其他三者里的快捷键不大常用，也不大通用，亦略去  </p>
+<hr>
+<h2 id="结语">结语</h2><p>上文提及的笔者定制的快捷键（参考 eclispe ）  </p>
+<pre><code>[  
+    { "<span class="attribute">keys</span>": <span class="value">[<span class="string">"alt+up"</span>]</span>, "<span class="attribute">command</span>": <span class="value"><span class="string">"swap_line_up"</span> </span>},  
+    { "<span class="attribute">keys</span>": <span class="value">[<span class="string">"alt+down"</span>]</span>, "<span class="attribute">command</span>": <span class="value"><span class="string">"swap_line_down"</span> </span>},  
+
+    { "<span class="attribute">keys</span>": <span class="value">[<span class="string">"shift+ctrl+y"</span>]</span>, "<span class="attribute">command</span>": <span class="value"><span class="string">"lower_case"</span> </span>},  
+    { "<span class="attribute">keys</span>": <span class="value">[<span class="string">"shift+ctrl+x"</span>]</span>, "<span class="attribute">command</span>": <span class="value"><span class="string">"upper_case"</span> </span>},  
+
+    { "<span class="attribute">keys</span>": <span class="value">[<span class="string">"alt+/"</span>]</span>, "<span class="attribute">command</span>": <span class="value"><span class="string">"auto_complete"</span> </span>},  
+    { "<span class="attribute">keys</span>": <span class="value">[<span class="string">"alt+/"</span>]</span>, "<span class="attribute">command</span>": <span class="value"><span class="string">"replace_completion_with_auto_complete"</span></span>, "<span class="attribute">context</span>":  
+        <span class="value">[  
+            { "<span class="attribute">key</span>": <span class="value"><span class="string">"last_command"</span></span>, "<span class="attribute">operator</span>": <span class="value"><span class="string">"equal"</span></span>, "<span class="attribute">operand</span>": <span class="value"><span class="string">"insert_best_completion"</span> </span>},  
+            { "<span class="attribute">key</span>": <span class="value"><span class="string">"auto_complete_visible"</span></span>, "<span class="attribute">operator</span>": <span class="value"><span class="string">"equal"</span></span>, "<span class="attribute">operand</span>": <span class="value"><span class="literal">false</span> </span>},  
+            { "<span class="attribute">key</span>": <span class="value"><span class="string">"setting.tab_completion"</span></span>, "<span class="attribute">operator</span>": <span class="value"><span class="string">"equal"</span></span>, "<span class="attribute">operand</span>": <span class="value"><span class="literal">true</span> </span>}  
+        ]  
+    </span>}  
+]
+</code></pre><hr>
+<p>参考和感谢：<br>Nicholas 和 Chris 在 <a href="http://scotch.io/" target="_blank" rel="external">scotch</a> 上的教程<br><a href="http://scotch.io/bar-talk/the-complete-visual-guide-to-sublime-text-3-getting-started-and-keyboard-shortcuts?utm_source=feedblitz&amp;utm_medium=FeedBlitzRss&amp;utm_campaign=scotch_io" target="_blank" rel="external">Nicholas</a><br><a href="http://scotch.io/bar-talk/sublime-text-keyboard-shortcuts" target="_blank" rel="external">Chris</a>  </p>
+
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Sublime-Text/">
+                #Sublime Text
+              </a>
+            
+          </div>
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2014/03/29/Python 判断汉字字符/">Python 判断汉字</a>
+              
+            </div>
+
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2014/03/21/Sublime Text as python ide/">Sublime Text as Python IDE</a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </div>
+    
+  </div>
+
+
+
+  
+    <div class="comments" id="comments">
+      
+        <div class="ds-thread" data-thread-key="2014/03/26/Sublime Text 3 常用快捷键/"
+             data-title="Sublime Text 3 常用快捷键" data-url="http://luopuya.github.io/2014/03/26/Sublime Text 3 常用快捷键/">
+        </div>
+
+      
+    </div>
+  
+
+          </div>
+
+          
+        </div>
+
+        
+<div class="sidebar-toggle">
+  <div class="sidebar-toggle-line-wrap">
+    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+  </div>
+</div>
+
+<div id="sidebar" class="sidebar">
+  <div class="sidebar-inner">
+
+    
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview">
+          站点概览
+        </li>
+      </ul>
+    
+
+    <div class="site-overview">
+      <div class="site-author motion-element">
+        <img class="site-author-image" src="/images/default_avatar.jpg" alt="luopuya" />
+        <p class="site-author-name">luopuya</p>
+      </div>
+      <p class="site-description motion-element">Even If You Walk and Walk</p>
+      <div class="site-state motion-element">
+        <div class="site-state-item site-state-posts">
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </div>
+        <div class="site-state-item site-state-tags">
+            <span class="site-state-item-count">9</span>
+            <span class="site-state-item-name">标签</span>
+        </div>
+        <div class="site-state-item site-state-pages">
+            <span class="site-state-item-count">2</span>
+            <span class="site-state-item-name">页面</span>
+        </div>
+      </div>
+
+      
+        <div class="feed-link motion-element">
+          <a href="/atom.xml">
+            <i class="menu-item-icon icon-feed"></i>
+            RSS
+          </a>
+        </div>
+      
+
+      <div class="social-info motion-element">
+        
+          
+            <span class="social-item">
+              <a href="https://github.com/luopuya">GitHub</a>
+            </span>
+          
+        
+      </div>
+
+      
+      
+        <div class="cc-license motion-element">
+          <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+            <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+          </a>
+        </div>
+      
+
+    </div>
+
+    
+      <div class="post-toc-wrap sidebar-panel-active">
+        <div class="post-toc-indicator-top post-toc-indicator"></div>
+        <div class="post-toc">
+          
+          
+            <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Edit"><span class="nav-number">2.</span> <span class="nav-text">Edit</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本编辑："><span class="nav-number">2.1.</span> <span class="nav-text">基本编辑：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#(多)行/块编辑："><span class="nav-number">2.2.</span> <span class="nav-text">(多)行/块编辑：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码折叠："><span class="nav-number">2.3.</span> <span class="nav-text">代码折叠：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#书签："><span class="nav-number">2.4.</span> <span class="nav-text">书签：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Selection"><span class="nav-number">3.</span> <span class="nav-text">Selection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Find"><span class="nav-number">4.</span> <span class="nav-text">Find</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#View"><span class="nav-number">5.</span> <span class="nav-text">View</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Go_To"><span class="nav-number">6.</span> <span class="nav-text">Go To</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tools"><span class="nav-number">7.</span> <span class="nav-text">Tools</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#File,_Project,_Preference,_Help"><span class="nav-number">8.</span> <span class="nav-text">File, Project, Preference, Help</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">9.</span> <span class="nav-text">结语</span></a></li></ol></div>
+          
+        </div>
+        <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+      </div>
+    
+
+  </div>
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2011 - 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">luopuya</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 - <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT</a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $(".fancybox").fancybox();
+    });
+  </script>
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    sidebatToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebatToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
+    }
+  });
+
+</script>
+
+
+
+
+
+  
+  
+<script type="text/javascript" id="bootstrap.scrollspy.custom">
+  /* ========================================================================
+  * Bootstrap: scrollspy.js v3.3.2
+  * http://getbootstrap.com/javascript/#scrollspy
+  * ========================================================================
+  * Copyright 2011-2015 Twitter, Inc.
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+  * ======================================================================== */
+
+  /**
+   * Custom by iissnan
+   *
+   * - Add a `clear.bs.scrollspy` event.
+   * - Esacpe targets selector.
+   */
+
+
+  +function ($) {
+    'use strict';
+
+    // SCROLLSPY CLASS DEFINITION
+    // ==========================
+
+    function ScrollSpy(element, options) {
+      this.$body          = $(document.body)
+      this.$scrollElement = $(element).is(document.body) ? $(window) : $(element)
+      this.options        = $.extend({}, ScrollSpy.DEFAULTS, options)
+      this.selector       = (this.options.target || '') + ' .nav li > a'
+      this.offsets        = []
+      this.targets        = []
+      this.activeTarget   = null
+      this.scrollHeight   = 0
+
+      this.$scrollElement.on('scroll.bs.scrollspy', $.proxy(this.process, this))
+      this.refresh()
+      this.process()
+    }
+
+    ScrollSpy.VERSION  = '3.3.2'
+
+    ScrollSpy.DEFAULTS = {
+      offset: 10
+    }
+
+    ScrollSpy.prototype.getScrollHeight = function () {
+      return this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
+    }
+
+    ScrollSpy.prototype.refresh = function () {
+      var that          = this
+      var offsetMethod  = 'offset'
+      var offsetBase    = 0
+
+      this.offsets      = []
+      this.targets      = []
+      this.scrollHeight = this.getScrollHeight()
+
+      if (!$.isWindow(this.$scrollElement[0])) {
+        offsetMethod = 'position'
+        offsetBase   = this.$scrollElement.scrollTop()
+      }
+
+      this.$body
+        .find(this.selector)
+        .map(function () {
+          var $el   = $(this)
+          var href  = $el.data('target') || $el.attr('href')
+          var $href = /^#./.test(href) && $(escapeSelector(href)) // Need to escape selector.
+
+          return ($href
+            && $href.length
+            && $href.is(':visible')
+            && [[$href[offsetMethod]().top + offsetBase, href]]) || null
+        })
+        .sort(function (a, b) { return a[0] - b[0] })
+        .each(function () {
+          that.offsets.push(this[0])
+          that.targets.push(this[1])
+        })
+
+
+    }
+
+    ScrollSpy.prototype.process = function () {
+      var scrollTop    = this.$scrollElement.scrollTop() + this.options.offset
+      var scrollHeight = this.getScrollHeight()
+      var maxScroll    = this.options.offset + scrollHeight - this.$scrollElement.height()
+      var offsets      = this.offsets
+      var targets      = this.targets
+      var activeTarget = this.activeTarget
+      var i
+
+      if (this.scrollHeight != scrollHeight) {
+        this.refresh()
+      }
+
+      if (scrollTop >= maxScroll) {
+        return activeTarget != (i = targets[targets.length - 1]) && this.activate(i)
+      }
+
+      if (activeTarget && scrollTop < offsets[0]) {
+        $(this.selector).trigger('clear.bs.scrollspy')  // Add a custom event.
+        this.activeTarget = null
+        return this.clear()
+      }
+
+      for (i = offsets.length; i--;) {
+        activeTarget != targets[i]
+          && scrollTop >= offsets[i]
+          && (!offsets[i + 1] || scrollTop <= offsets[i + 1])
+          && this.activate(targets[i])
+      }
+    }
+
+    ScrollSpy.prototype.activate = function (target) {
+      this.activeTarget = target
+
+      this.clear()
+
+      var selector = this.selector +
+        '[data-target="' + target + '"],' +
+        this.selector + '[href="' + target + '"]'
+
+      var active = $(selector)
+        .parents('li')
+        .addClass('active')
+
+      if (active.parent('.dropdown-menu').length) {
+        active = active
+          .closest('li.dropdown')
+          .addClass('active')
+      }
+
+      active.trigger('activate.bs.scrollspy')
+    }
+
+    ScrollSpy.prototype.clear = function () {
+      $(this.selector)
+        .parentsUntil(this.options.target, '.active')
+        .removeClass('active')
+    }
+
+
+    // SCROLLSPY PLUGIN DEFINITION
+    // ===========================
+
+    function Plugin(option) {
+      return this.each(function () {
+        var $this   = $(this)
+        var data    = $this.data('bs.scrollspy')
+        var options = typeof option == 'object' && option
+
+        if (!data) $this.data('bs.scrollspy', (data = new ScrollSpy(this, options)))
+        if (typeof option == 'string') data[option]()
+      })
+    }
+
+    var old = $.fn.scrollspy
+
+    $.fn.scrollspy             = Plugin
+    $.fn.scrollspy.Constructor = ScrollSpy
+
+
+    // SCROLLSPY NO CONFLICT
+    // =====================
+
+    $.fn.scrollspy.noConflict = function () {
+      $.fn.scrollspy = old
+      return this
+    }
+
+
+    // SCROLLSPY DATA-API
+    // ==================
+
+    $(window).on('load.bs.scrollspy.data-api', function () {
+      $('[data-spy="scroll"]').each(function () {
+        var $spy = $(this)
+        Plugin.call($spy, $spy.data())
+      })
+    })
+
+  }(jQuery);
+</script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      if ($('.post-toc-content').html().trim().length > 0 && isDesktop()) {
+        setTimeout(function () {
+          $('.sidebar-toggle').trigger('click');
+        }, 800);
+      }
+    });
+  </script>
+
+
+
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"luopuya"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+  
+  <script type="text/javascript">
+    (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+        function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+      e.src='//www.google-analytics.com/analytics.js';
+      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+    ga('create','UA-49528806-1');ga('send','pageview');
+  </script>
+
+</body>
+</html>

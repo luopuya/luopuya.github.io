@@ -1,407 +1,916 @@
-
- <!DOCTYPE HTML>
-<html lang="zh-CN">
+<!doctype html>
+<html class="theme-next use-motion">
 <head>
-  <meta charset="UTF-8">
   
-    <title>Ubuntu 安装后的 Todolist | luopuya&#39;s blog</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
-    
-    <meta name="author" content="luopuya">
-    
-    <meta name="description" content="Ubuntu 12.04 64-bit桌面版简单配置，以下为todolist
-摘要安装Ubuntu后的todolist，关键点：  
 
-修改软件源，用aptitude统一管理软件  
-按需设置代理  
-配置自己的环境变量、别名">
-    
-    
-    
-    
-    <link rel="alternate" href="/atom.xml" title="luopuya&#39;s blog" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/pacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+  <meta name="google-site-verification" content="VvyjvVXcJQa0QklHipu6pwm2PJGnnchIqX7s5JbbT_0" />
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.3.0"/>
+
+
+    <meta name="description" content="Even If You Walk and Walk" />
+
+
+
+	<meta name="keywords" content="Ubuntu," />
+
+  <title> Ubuntu 安装后的 Todolist // luopuya's blog </title>
 </head>
 
-  <body>
-    <header>
-      <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.svg" alt="luopuya&#39;s blog" title="luopuya&#39;s blog"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="luopuya&#39;s blog">luopuya&#39;s blog</a></h1>
-				<h2 class="blog-motto">Even If You Walk and Walk</h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					
-						<li><a href="/">首页</a></li>
-					
-						<li><a href="/archives">存档</a></li>
-					
-					<li>
-					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
-						<input type="hidden" name="q" value="site:luopuya.github.io">
-					</form>
-					
-					</li>
-					<li> <a href="/atom.xml">RSS</a> </li>
-				</ul>
-			</nav>			
-</div>
+<body>
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
 
-    </header>
-    <div id="container">
-      <div id="main" class="post" itemscope itemprop="blogPost">
-	<article itemprop="articleBody"> 
-		<header class="article-info clearfix">
-  <h1 itemprop="name">
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+    <a href="/" class="brand">
+        <span class="logo">
+          <i class="icon-logo"></i>
+        </span>
+        <span class="site-title">luopuya's blog</span>
+    </a>
+</h1>
+
+
+  <ul id="menu" class="menu">
     
-      <a href="/2013/11/29/Ubuntu 安装后的 Todolist/" title="Ubuntu 安装后的 Todolist" itemprop="url">Ubuntu 安装后的 Todolist</a>
-  </h1>
-  <p class="article-author">By
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首页
+        </a>
+      </li>
     
-      <a href="https://plus.google.com/106088948921899120000?rel=author" title="luopuya" target="_blank" itemprop="author">luopuya</a>
-    </p>
-  <p class="article-time">
-    <time datetime="2013-11-29T15:27:00.000Z" itemprop="datePublished">Nov 29 2013</time>
-    更新日期:<time datetime="2014-12-09T06:39:19.000Z" itemprop="dateModified">Dec 9 2014</time>
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          归档
+        </a>
+      </li>
     
-  </p>
-</header>
-	<div class="article-content">
-		
-		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#摘要"><span class="toc-number">1.</span> <span class="toc-text">摘要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装虚拟机工具"><span class="toc-number">2.</span> <span class="toc-text">安装虚拟机工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置root密码"><span class="toc-number">3.</span> <span class="toc-text">设置root密码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改软件源"><span class="toc-number">4.</span> <span class="toc-text">修改软件源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置中文"><span class="toc-number">5.</span> <span class="toc-text">设置中文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装aptitude"><span class="toc-number">6.</span> <span class="toc-text">安装aptitude</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置代理"><span class="toc-number">7.</span> <span class="toc-text">设置代理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#VPN代理"><span class="toc-number">7.1.</span> <span class="toc-text">VPN代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#普通代理"><span class="toc-number">7.2.</span> <span class="toc-text">普通代理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">8.</span> <span class="toc-text">总结</span></a></li></ol>
-		</div>
-		
-		<p>Ubuntu 12.04 64-bit桌面版简单配置，以下为todolist</p>
-<h2 id="摘要">摘要</h2><p>安装Ubuntu后的todolist，关键点：  </p>
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          标签
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+            
+          
+
+          <div id="posts" class="posts-expand">
+            
+  
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Ubuntu 安装后的 Todolist
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-11-29
+          
+        </span>
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2013/11/29/Ubuntu 安装后的 Todolist/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/29/Ubuntu 安装后的 Todolist/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          <p>Ubuntu 12.04 64-bit 桌面版简单配置，以下为 todolist</p>
+<h2 id="摘要">摘要</h2><p>安装 Ubuntu 后的 todolist，关键点：  </p>
 <ol>
-<li>修改软件源，用aptitude统一管理软件  </li>
+<li>修改软件源，用 aptitude 统一管理软件  </li>
 <li>按需设置代理  </li>
 <li>配置自己的环境变量、别名    </li>
 </ol>
 <a id="more"></a>
-<h2 id="安装虚拟机工具">安装虚拟机工具</h2><p>以VMware为例：  </p>
+<h2 id="安装虚拟机工具">安装虚拟机工具</h2><p>以 VMware 为例：  </p>
 <ol>
-<li>点击【虚拟机】-&gt;【安装VMware工具】  </li>
-<li>将压缩包拖至~/download，后用tar解压  </li>
-<li>运行vmware-install.pl，以默认配置即可（全回车）  </li>
+<li>点击 <strong>【虚拟机】-&gt;【安装VMware工具】</strong>  </li>
+<li>将压缩包拖至 ~/download，后用 tar 解压  </li>
+<li>运行 vmware-install.pl，以默认配置即可（全回车）  </li>
 </ol>
-<h2 id="设置root密码">设置root密码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo passwd root</span><br></pre></td></tr></table></figure>
-<h2 id="修改软件源">修改软件源</h2><p>打开Ubuntu软件中心，并点击【编辑】-&gt;【软件源】  </p>
+<h2 id="设置_root_密码">设置 root 密码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo passwd root</span><br></pre></td></tr></table></figure>
+<h2 id="修改软件源">修改软件源</h2><p>打开 Ubuntu 软件中心，并点击 <strong>【编辑】-&gt;【软件源】</strong>   </p>
 <ol>
-<li><p><strong>设置常规软件源</strong><br>从<strong>下载自</strong>中选择一个中国的服务器即可  </p>
+<li><p><strong>设置常规软件源</strong><br>从 <strong>下载自</strong> 中选择一个中国的服务器即可  </p>
 </li>
-<li><p><strong>添加额外软件源</strong><br>点击【其它软件】-&gt;【添加】<br>通常添加deb或ppa：<br>如需chrome，输入deb <a href="http://dl.google.com/linux/chrome/deb/" target="_blank" rel="external">http://dl.google.com/linux/chrome/deb/</a> stable main<br>如需oracle jdk，输入ppa:webupd8team/java<br>see more[<a href="https://launchpad.net/~webupd8team/+archive/ubuntu/java" target="_blank" rel="external">https://launchpad.net/~webupd8team/+archive/ubuntu/java</a>]<br>如需vim7.4，输入ppa:fcwu-tw/ppa  </p>
+<li><p><strong>添加额外软件源</strong><br>点击 <strong>【其它软件】-&gt;【添加】</strong><br>通常添加 deb 或 ppa：<br>如需 chrome，输入 deb <a href="http://dl.google.com/linux/chrome/deb/" target="_blank" rel="external">http://dl.google.com/linux/chrome/deb/</a> stable main<br>如需 oracle jdk，输入 ppa:webupd8team/java<br>see more[<a href="https://launchpad.net/~webupd8team/+archive/ubuntu/java" target="_blank" rel="external">https://launchpad.net/~webupd8team/+archive/ubuntu/java</a>]<br>如需 vim7.4，输入 ppa:fcwu-tw/ppa  </p>
 </li>
 </ol>
-<p>所做的修改其实均在/etc/apt下：<br>修改的服务器源在/etc/apt/sources.list文件中<br>添加的软件源在/etc/apt/sources.list.d文件夹里  </p>
-<p>添加ppa也可以如下方式：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:webupd8team/java</span><br></pre></td></tr></table></figure></p>
-<h2 id="设置中文">设置中文</h2><p>打开系统设置，并点击【语言支持】<br>从<strong>添加或删除语言</strong>中选择<strong>简体中文</strong>，后将其拖至列表首，并点击<strong>应用至整个系统</strong>即可<br>依照提示安装需要的语言包</p>
-<h2 id="安装aptitude">安装aptitude</h2><p>与apt-get相比，aptitude命令统一，更友好<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install aptitude</span><br></pre></td></tr></table></figure></p>
-<h2 id="设置代理">设置代理</h2><h3 id="VPN代理">VPN代理</h3><p>在右上方点开网络设置，点击【VPN连接】-&gt;【配置VPN】<br>添加并编辑VPN<br>最后设置【VPN】-&gt;【高级】-&gt;【使用点到点加密】（很重要）  </p>
+<p>所做的修改其实均在 /etc/apt 下：<br>修改的服务器源在 /etc/apt/sources.list 文件中<br>添加的软件源在 /etc/apt/sources.list.d 文件夹里  </p>
+<p>添加 ppa 也可以如下方式：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:webupd8team/java</span><br></pre></td></tr></table></figure></p>
+<h2 id="设置中文">设置中文</h2><p>打开系统设置，并点击 <strong>【语言支持】</strong><br>从 <strong>添加或删除语言</strong> 中选择 <strong>简体中文</strong> ，后将其拖至列表首，并点击 <strong>应用至整个系统</strong> 即可<br>依照提示安装需要的语言包</p>
+<h2 id="安装_aptitude">安装 aptitude</h2><p>与 apt-get 相比，aptitude 命令统一，更友好<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install aptitude</span><br></pre></td></tr></table></figure></p>
+<h2 id="设置代理">设置代理</h2><h3 id="VPN_代理">VPN 代理</h3><p>在右上方点开网络设置，点击 <strong>【VPN连接】-&gt;【配置VPN】</strong><br>添加并编辑 VPN<br>最后设置 <strong>【VPN】-&gt;【高级】-&gt;【使用点到点加密】</strong>（很重要）  </p>
 <h3 id="普通代理">普通代理</h3><p>可将代理地址和端口写入自己的环境变量<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gedit ~/.bashrc</span><br></pre></td></tr></table></figure></p>
-<p>添加（以goagent代理为例）<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># add for proxy&#10;export http_proxy=http://127.0.0.1:8087&#10;export https_proxy=http://127.0.0.1:8087&#10;export ftp_proxy=http://127.0.0.1:8087</span><br></pre></td></tr></table></figure></p>
+<p>添加（以 goagent 代理为例）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># add for proxy</span></span><br><span class="line"><span class="built_in">export</span> http_proxy=http://<span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">8087</span></span><br><span class="line"><span class="built_in">export</span> https_proxy=http://<span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">8087</span></span><br><span class="line"><span class="built_in">export</span> ftp_proxy=http://<span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">8087</span></span><br></pre></td></tr></table></figure></p>
 <p>要使环境变量生效，新开终端或输入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure></p>
-<p>当然也可以临时在终端输入export指令</p>
+<p>当然也可以临时在终端输入 export 指令</p>
 <hr>
-<p>以上完成后，可选择升级已有软件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo aptitude update  </span><br><span class="line">sudo aptitude upgrade</span><br></pre></td></tr></table></figure></p>
-<h2 id="总结">总结</h2><p>至此简单形成以aptitude统一管理软件的环境，常用指令有：<br>更新（<strong>update</strong>） 安装（<strong>install</strong>） 卸载（<strong>remove</strong>） 升级（<strong>upgrade</strong>） 查找（<strong>search</strong>）<br>自己的环境变量、别名记在<strong>~/.bashrc</strong>：  </p>
+<p>以上完成后，可选择升级已有软件  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo aptitude update  </span><br><span class="line">sudo aptitude upgrade</span><br></pre></td></tr></table></figure>
+<h2 id="总结">总结</h2><p>至此简单形成以 aptitude 统一管理软件的环境，常用指令有：  </p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">功能</th>
+<th style="text-align:center">指令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">更新</td>
+<td style="text-align:center"><strong>update</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">安装</td>
+<td style="text-align:center"><strong>install</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">卸载</td>
+<td style="text-align:center"><strong>remove</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">升级</td>
+<td style="text-align:center"><strong>upgrade</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">查找</td>
+<td style="text-align:center"><strong>search</strong></td>
+</tr>
+</tbody>
+</table>
+<p>自己的环境变量、别名记在 <strong>~/.bashrc</strong> ：  </p>
 <ol>
 <li>环境变量（export）  </li>
 <li>别名/快捷方式（alias）  </li>
 </ol>
-  
-	</div>
-		<footer class="article-footer clearfix">
 
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Ubuntu/">Ubuntu</a>
-  </div>
-
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Tool/">Tool</a>
-</div>
-
-
-
-<div class="article-share" id="share">
-
-  <div data-url="http://luopuya.github.io/2013/11/29/Ubuntu 安装后的 Todolist/" data-title="Ubuntu 安装后的 Todolist | luopuya&#39;s blog" data-tsina="null" class="share clearfix">
-  </div>
-
-</div>
-</footer>   	       
-	</article>
-	
-<nav class="article-nav clearfix">
- 
- <div class="prev" >
- <a href="/2014/03/21/改造 cmd 成 shell/" title="改造 cmd 成 shell">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  改造 cmd 成 shell</span>
-</a>
-</div>
-
-
-</nav>
-
-	
-<section class="comment">
-	<div class="ds-thread"></div>
-</section>
-
-</div>  
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
-
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#摘要"><span class="toc-number">1.</span> <span class="toc-text">摘要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装虚拟机工具"><span class="toc-number">2.</span> <span class="toc-text">安装虚拟机工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置root密码"><span class="toc-number">3.</span> <span class="toc-text">设置root密码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改软件源"><span class="toc-number">4.</span> <span class="toc-text">修改软件源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置中文"><span class="toc-number">5.</span> <span class="toc-text">设置中文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装aptitude"><span class="toc-number">6.</span> <span class="toc-text">安装aptitude</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置代理"><span class="toc-number">7.</span> <span class="toc-text">设置代理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#VPN代理"><span class="toc-number">7.1.</span> <span class="toc-text">VPN代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#普通代理"><span class="toc-number">7.2.</span> <span class="toc-text">普通代理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">8.</span> <span class="toc-text">总结</span></a></li></ol>
-  </div>
-
-<div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
-<aside class="clearfix">
-
-  
-<div class="categorieslist">
-	<p class="asidetitle">分类</p>
-		<ul>
-		
-			<li><a href="/categories/Algorithm/" title="Algorithm">Algorithm<sup>1</sup></a></li>
-		
-			<li><a href="/categories/Issue/" title="Issue">Issue<sup>4</sup></a></li>
-		
-			<li><a href="/categories/Tool/" title="Tool">Tool<sup>4</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  
-<div class="tagslist">
-	<p class="asidetitle">标签</p>
-		<ul class="clearfix">
-		
-			<li><a href="/tags/bashrc/" title=".bashrc">.bashrc<sup>1</sup></a></li>
-		
-			<li><a href="/tags/Algorithm/" title="Algorithm">Algorithm<sup>1</sup></a></li>
-		
-			<li><a href="/tags/Linux/" title="Linux">Linux<sup>2</sup></a></li>
-		
-			<li><a href="/tags/Python/" title="Python">Python<sup>2</sup></a></li>
-		
-			<li><a href="/tags/Sublime-Text/" title="Sublime Text">Sublime Text<sup>1</sup></a></li>
-		
-			<li><a href="/tags/Ubuntu/" title="Ubuntu">Ubuntu<sup>1</sup></a></li>
-		
-			<li><a href="/tags/alias/" title="alias">alias<sup>1</sup></a></li>
-		
-			<li><a href="/tags/cmd/" title="cmd">cmd<sup>2</sup></a></li>
-		
-			<li><a href="/tags/编码/" title="编码">编码<sup>2</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
-</div>
-
-  <div class="linkslist">
-  <p class="asidetitle">友情链接</p>
-    <ul>
-      <li><a href="http://maziang.com/" target="_blank" title="Maziang's blog">Maziang's blog</a></li>
-    </ul>
-</div>
-
-
-</aside>
-</div>
-    </div>
-    <footer><div id="footer" >
-	
-	<div class="line">
-		<span></span>
-		<div class="author"></div>
-	</div>
-	
-	
-	<div class="social-font clearfix">
-		
-		
-		
-		<a href="https://github.com/luopuya" target="_blank" title="github"></a>
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
-		
-		<a href="http://luopuya.github.io" target="_blank" title="luopuya">luopuya</a>
-		
-		</p>
-</div>
-</footer>
-    <script src="/js/jquery-2.1.0.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
         
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Ubuntu/">
+                #Ubuntu
+              </a>
+            
+          </div>
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2014/03/21/改造 cmd 成 shell/">改造 cmd 成 shell</a>
+              
+            </div>
+
+            <div class="post-nav-next post-nav-item">
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </div>
+    
+  </div>
+
+
+
+  
+    <div class="comments" id="comments">
+      
+        <div class="ds-thread" data-thread-key="2013/11/29/Ubuntu 安装后的 Todolist/"
+             data-title="Ubuntu 安装后的 Todolist" data-url="http://luopuya.github.io/2013/11/29/Ubuntu 安装后的 Todolist/">
+        </div>
+
+      
+    </div>
+  
+
+          </div>
+
+          
+        </div>
+
+        
+<div class="sidebar-toggle">
+  <div class="sidebar-toggle-line-wrap">
+    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+  </div>
+</div>
+
+<div id="sidebar" class="sidebar">
+  <div class="sidebar-inner">
+
+    
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview">
+          站点概览
+        </li>
+      </ul>
+    
+
+    <div class="site-overview">
+      <div class="site-author motion-element">
+        <img class="site-author-image" src="/images/default_avatar.jpg" alt="luopuya" />
+        <p class="site-author-name">luopuya</p>
+      </div>
+      <p class="site-description motion-element">Even If You Walk and Walk</p>
+      <div class="site-state motion-element">
+        <div class="site-state-item site-state-posts">
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </div>
+        <div class="site-state-item site-state-tags">
+            <span class="site-state-item-count">9</span>
+            <span class="site-state-item-name">标签</span>
+        </div>
+        <div class="site-state-item site-state-pages">
+            <span class="site-state-item-count">2</span>
+            <span class="site-state-item-name">页面</span>
+        </div>
+      </div>
+
+      
+        <div class="feed-link motion-element">
+          <a href="/atom.xml">
+            <i class="menu-item-icon icon-feed"></i>
+            RSS
+          </a>
+        </div>
+      
+
+      <div class="social-info motion-element">
+        
+          
+            <span class="social-item">
+              <a href="https://github.com/luopuya">GitHub</a>
+            </span>
+          
+        
+      </div>
+
+      
+      
+        <div class="cc-license motion-element">
+          <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+            <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+          </a>
+        </div>
+      
+
+    </div>
+
+    
+      <div class="post-toc-wrap sidebar-panel-active">
+        <div class="post-toc-indicator-top post-toc-indicator"></div>
+        <div class="post-toc">
+          
+          
+            <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装虚拟机工具"><span class="nav-number">2.</span> <span class="nav-text">安装虚拟机工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置_root_密码"><span class="nav-number">3.</span> <span class="nav-text">设置 root 密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改软件源"><span class="nav-number">4.</span> <span class="nav-text">修改软件源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置中文"><span class="nav-number">5.</span> <span class="nav-text">设置中文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装_aptitude"><span class="nav-number">6.</span> <span class="nav-text">安装 aptitude</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置代理"><span class="nav-number">7.</span> <span class="nav-text">设置代理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#VPN_代理"><span class="nav-number">7.1.</span> <span class="nav-text">VPN 代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#普通代理"><span class="nav-number">7.2.</span> <span class="nav-text">普通代理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a></li></ol></div>
+          
+        </div>
+        <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+      </div>
+    
+
+  </div>
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2011 - 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">luopuya</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 - <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT</a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $(".fancybox").fancybox();
+    });
+  </script>
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    sidebatToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebatToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
     }
   });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var ai = $('.article-content>iframe'),
-      ae = $('.article-content>embed'),
-      t  = $('#toc'),
-      h  = $('article h2')
-      ah = $('article h2'),
-      ta = $('#toc.toc-aside'),
-      o  = $('.openaside'),
-      c  = $('.closeaside');
-  if(ai.length>0){
-    ai.wrap('<div class="video-container" />');
-  };
-  if(ae.length>0){
-   ae.wrap('<div class="video-container" />');
-  };
-  if(ah.length==0){
-    t.css('display','none');
-  }else{
-    c.click(function(){
-      ta.css('display', 'block').addClass('fadeIn');
-    });
-    o.click(function(){
-      ta.css('display', 'none');
-    });
-    $(window).scroll(function(){
-      ta.css("top",Math.max(140,320-$(this).scrollTop()));
-    });
-  };
-});
 </script>
 
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var $this = $('.share'),
-      url = $this.attr('data-url'),
-      encodedUrl = encodeURIComponent(url),
-      title = $this.attr('data-title'),
-      tsina = $this.attr('data-tsina');
-  var html = [
-  '<a href="#" class="overlay" id="qrcode"></a>',
-  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
-  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
-  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
-  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
-  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
-  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
-  '<span title="Share to"></span>'
-  ].join('');
-  $this.append(html);
-  $('.article-share-qrcode').click(function(){
-    var imgSrc = $('#qrcode-pic').attr('data-src');
-    $('#qrcode-pic').attr('src', imgSrc);
-    $('#qrcode-pic').load(function(){
-        $('.qrcode strong').text(' ');
+
+
+
+  
+  
+<script type="text/javascript" id="bootstrap.scrollspy.custom">
+  /* ========================================================================
+  * Bootstrap: scrollspy.js v3.3.2
+  * http://getbootstrap.com/javascript/#scrollspy
+  * ========================================================================
+  * Copyright 2011-2015 Twitter, Inc.
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+  * ======================================================================== */
+
+  /**
+   * Custom by iissnan
+   *
+   * - Add a `clear.bs.scrollspy` event.
+   * - Esacpe targets selector.
+   */
+
+
+  +function ($) {
+    'use strict';
+
+    // SCROLLSPY CLASS DEFINITION
+    // ==========================
+
+    function ScrollSpy(element, options) {
+      this.$body          = $(document.body)
+      this.$scrollElement = $(element).is(document.body) ? $(window) : $(element)
+      this.options        = $.extend({}, ScrollSpy.DEFAULTS, options)
+      this.selector       = (this.options.target || '') + ' .nav li > a'
+      this.offsets        = []
+      this.targets        = []
+      this.activeTarget   = null
+      this.scrollHeight   = 0
+
+      this.$scrollElement.on('scroll.bs.scrollspy', $.proxy(this.process, this))
+      this.refresh()
+      this.process()
+    }
+
+    ScrollSpy.VERSION  = '3.3.2'
+
+    ScrollSpy.DEFAULTS = {
+      offset: 10
+    }
+
+    ScrollSpy.prototype.getScrollHeight = function () {
+      return this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
+    }
+
+    ScrollSpy.prototype.refresh = function () {
+      var that          = this
+      var offsetMethod  = 'offset'
+      var offsetBase    = 0
+
+      this.offsets      = []
+      this.targets      = []
+      this.scrollHeight = this.getScrollHeight()
+
+      if (!$.isWindow(this.$scrollElement[0])) {
+        offsetMethod = 'position'
+        offsetBase   = this.$scrollElement.scrollTop()
+      }
+
+      this.$body
+        .find(this.selector)
+        .map(function () {
+          var $el   = $(this)
+          var href  = $el.data('target') || $el.attr('href')
+          var $href = /^#./.test(href) && $(escapeSelector(href)) // Need to escape selector.
+
+          return ($href
+            && $href.length
+            && $href.is(':visible')
+            && [[$href[offsetMethod]().top + offsetBase, href]]) || null
+        })
+        .sort(function (a, b) { return a[0] - b[0] })
+        .each(function () {
+          that.offsets.push(this[0])
+          that.targets.push(this[1])
+        })
+
+
+    }
+
+    ScrollSpy.prototype.process = function () {
+      var scrollTop    = this.$scrollElement.scrollTop() + this.options.offset
+      var scrollHeight = this.getScrollHeight()
+      var maxScroll    = this.options.offset + scrollHeight - this.$scrollElement.height()
+      var offsets      = this.offsets
+      var targets      = this.targets
+      var activeTarget = this.activeTarget
+      var i
+
+      if (this.scrollHeight != scrollHeight) {
+        this.refresh()
+      }
+
+      if (scrollTop >= maxScroll) {
+        return activeTarget != (i = targets[targets.length - 1]) && this.activate(i)
+      }
+
+      if (activeTarget && scrollTop < offsets[0]) {
+        $(this.selector).trigger('clear.bs.scrollspy')  // Add a custom event.
+        this.activeTarget = null
+        return this.clear()
+      }
+
+      for (i = offsets.length; i--;) {
+        activeTarget != targets[i]
+          && scrollTop >= offsets[i]
+          && (!offsets[i + 1] || scrollTop <= offsets[i + 1])
+          && this.activate(targets[i])
+      }
+    }
+
+    ScrollSpy.prototype.activate = function (target) {
+      this.activeTarget = target
+
+      this.clear()
+
+      var selector = this.selector +
+        '[data-target="' + target + '"],' +
+        this.selector + '[href="' + target + '"]'
+
+      var active = $(selector)
+        .parents('li')
+        .addClass('active')
+
+      if (active.parent('.dropdown-menu').length) {
+        active = active
+          .closest('li.dropdown')
+          .addClass('active')
+      }
+
+      active.trigger('activate.bs.scrollspy')
+    }
+
+    ScrollSpy.prototype.clear = function () {
+      $(this.selector)
+        .parentsUntil(this.options.target, '.active')
+        .removeClass('active')
+    }
+
+
+    // SCROLLSPY PLUGIN DEFINITION
+    // ===========================
+
+    function Plugin(option) {
+      return this.each(function () {
+        var $this   = $(this)
+        var data    = $this.data('bs.scrollspy')
+        var options = typeof option == 'object' && option
+
+        if (!data) $this.data('bs.scrollspy', (data = new ScrollSpy(this, options)))
+        if (typeof option == 'string') data[option]()
+      })
+    }
+
+    var old = $.fn.scrollspy
+
+    $.fn.scrollspy             = Plugin
+    $.fn.scrollspy.Constructor = ScrollSpy
+
+
+    // SCROLLSPY NO CONFLICT
+    // =====================
+
+    $.fn.scrollspy.noConflict = function () {
+      $.fn.scrollspy = old
+      return this
+    }
+
+
+    // SCROLLSPY DATA-API
+    // ==================
+
+    $(window).on('load.bs.scrollspy.data-api', function () {
+      $('[data-spy="scroll"]').each(function () {
+        var $spy = $(this)
+        Plugin.call($spy, $spy.data())
+      })
+    })
+
+  }(jQuery);
+</script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
     });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
   });
-});     
 </script>
 
 
-<script type="text/javascript">
-  var duoshuoQuery = {short_name:"luopuya"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-    || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-</script> 
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      if ($('.post-toc-content').html().trim().length > 0 && isDesktop()) {
+        setTimeout(function () {
+          $('.sidebar-toggle').trigger('click');
+        }, 800);
+      }
+    });
+  </script>
 
 
 
 
-<script type="text/javascript">
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-ga('create', 'UA-49528806-1', 'luopuya.github.io');  
-ga('send', 'pageview');
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
 </script>
 
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
 
-  </body>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"luopuya"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+  
+  <script type="text/javascript">
+    (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+        function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+      e.src='//www.google-analytics.com/analytics.js';
+      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+    ga('create','UA-49528806-1');ga('send','pageview');
+  </script>
+
+</body>
 </html>
