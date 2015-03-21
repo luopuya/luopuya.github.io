@@ -36,11 +36,13 @@
 
 
 
-  <title> 归档 // luopuya's blog </title>
+  <title> luopuya's blog </title>
 </head>
 
 <body>
-  <div class="container one-column  page-archive ">
+  <div class="container one-column 
+   page-home 
+">
     <div class="headband"></div>
 
     <div id="header" class="header">
@@ -94,33 +96,9 @@
             
           
 
-          <div id="posts" class="posts-collapse">
+          <div id="posts" class="posts-expand">
             
-
-  <span class="archive-move-on"></span>
-
-  <span class="archive-page-counter">
-    
-    
-     
-    
-    嗯..! 目前共计 10 篇日志。 继续努力。
-  </span>
-
   
-
-    
-    
-    
-
-    
-      
-      <div class="collection-title">
-        <h2 class="archive-year motion-element" id="archive-year-2015">2015</h2>
-      </div>
-    
-    
-
     
 
   <div class="post post-type-normal ">
@@ -132,8 +110,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/01/23/KMP/">
-                KMP
+              <a class="post-title-link" href="/2014/03/29/Python 判断汉字字符/">
+                Python 判断汉字
               </a>
             
           
@@ -143,15 +121,15 @@
       <div class="post-meta">
         <span class="post-time">
           
-            01-23
+            发表于 2014-03-29
           
         </span>
         
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/01/23/KMP/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/23/KMP/"></span>
+            <a href="/2014/03/29/Python 判断汉字字符/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2014/03/29/Python 判断汉字字符/"></span>
             </a>
           </span>
           
@@ -160,21 +138,61 @@
     </div>
 
     
+      <div class="post-body">
 
+        
+        
+
+        
+          
+            <p>使用 unicode 范围 <strong>\u4e00 - \u9fff</strong> 来判别汉字</p>
+<p><em>unicode 分配给汉字（中日韩越统一表意文字）的范围为 <strong>4E00-9FFF</strong> </em><br><em>（目前 unicode 6.3 的标准已定义到 9FCC ）</em></p>
+<p>在 Python 3 中，判断字符是否汉字的方法如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ishan</span><span class="params">(text)</span>:</span></span><br><span class="line">    <span class="comment"># for python 3.x</span></span><br><span class="line">    <span class="comment"># sample: ishan('一') == True, ishan('我&amp;&amp;你') == False</span></span><br><span class="line">    <span class="keyword">return</span> all(<span class="string">'\u4e00'</span> &lt;= char &lt;= <span class="string">'\u9fff'</span> <span class="keyword">for</span> char <span class="keyword">in</span> text)</span><br></pre></td></tr></table></figure>
+<p>而在 Python 2 中则为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ishan</span><span class="params">(text)</span>:</span></span><br><span class="line">    <span class="comment"># for python 2.x, 3.3+</span></span><br><span class="line">    <span class="comment"># sample: ishan(u'一') == True, ishan(u'我&amp;&amp;你') == False</span></span><br><span class="line">    <span class="keyword">return</span> all(<span class="string">u'\u4e00'</span> &lt;= char &lt;= <span class="string">u'\u9fff'</span> <span class="keyword">for</span> char <span class="keyword">in</span> text)</span><br></pre></td></tr></table></figure>
+<p><strong>补充说明</strong>   </p>
+<ol>
+<li>Python 3.3+ 重新支持 Python 2 中用 u 表示 unicode 的方式   </li>
+<li>\u4e00-\u9fff 不包含中文符号，如有需要可参考<a href="http://goo.gl/hyUcT7" target="_blank" rel="external">维基</a>   </li>
+<li>网上常见的 \u4e00-\u9fa5 写太死了，虽说目前而言后面的都是极其罕见的字  </li>
+</ol>
+<hr>
+<p>参考：<a href="http://www.unicode.org/charts/PDF/U4E00.pdf" target="_blank" rel="external">http://www.unicode.org/charts/PDF/U4E00.pdf</a></p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Python/">
+                #Python
+              </a>
+            
+              <a href="/tags/编码/">
+                #编码
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
     
   </div>
 
 
-
   
-
-    
-    
-    
-
-    
-    
-
     
 
   <div class="post post-type-normal ">
@@ -186,8 +204,8 @@
           
           
             
-              <a class="post-title-link" href="/2015/01/09/Alias for cmd/">
-                Alias for cmd
+              <a class="post-title-link" href="/2014/03/26/Sublime Text 3 常用快捷键/">
+                Sublime Text 3 常用快捷键
               </a>
             
           
@@ -197,15 +215,15 @@
       <div class="post-meta">
         <span class="post-time">
           
-            01-09
+            发表于 2014-03-26
           
         </span>
         
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/01/09/Alias for cmd/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/09/Alias for cmd/"></span>
+            <a href="/2014/03/26/Sublime Text 3 常用快捷键/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2014/03/26/Sublime Text 3 常用快捷键/"></span>
             </a>
           </span>
           
@@ -214,16 +232,323 @@
     </div>
 
     
+      <div class="post-body">
 
+        
+        
+
+        
+          
+            <p>Sublime Text 3 强大的不只有插件，自带快捷键亦可圈可点，下文介绍常用快捷键   </p>
+<h2 id="摘要">摘要</h2><p>Sublime Text 3 快捷键关键点：   </p>
+<ol>
+<li>多区域编辑与行编辑的能力   </li>
+<li>Go To 与 Ctrl + Shift + P   </li>
+<li>快捷键的管理机制   </li>
+<li>功能全面：宏、折叠、多界面等   </li>
+<li>可以使用历史记录的复制   </li>
+</ol>
+            <div class="post-more-link text-center">
+              <a class="btn" href="/2014/03/26/Sublime Text 3 常用快捷键/#more">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Sublime-Text/">
+                #Sublime Text
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
     
   </div>
 
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/03/21/Sublime Text as python ide/">
+                Sublime Text as Python IDE
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2014-03-21
+          
+        </span>
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2014/03/21/Sublime Text as python ide/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2014/03/21/Sublime Text as python ide/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <p>Sublime Text 是非常实用的编辑器，其中插件配置至关重要，<br>以下针对 Python 开发者推荐插件  </p>
+<p>核心插件为：  </p>
+<ul>
+<li>Anaconda  </li>
+<li>Git  </li>
+<li>Markdown Preview, MarkdownEditing  </li>
+</ul>
+            <div class="post-more-link text-center">
+              <a class="btn" href="/2014/03/21/Sublime Text as python ide/#more">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Sublime-Text/">
+                #Sublime Text
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/03/21/改造 cmd 成 shell/">
+                改造 cmd 成 shell
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2014-03-21
+          
+        </span>
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2014/03/21/改造 cmd 成 shell/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2014/03/21/改造 cmd 成 shell/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <p>Windows 下的 cmd 不太好用，以下将其增强部分 *nix 的 shell 功能</p>
+<h2 id="摘要">摘要</h2><p>将 cmd 改造成 shell，关键点：  </p>
+<ul>
+<li>Gow</li>
+<li>Clink  </li>
+</ul>
+            <div class="post-more-link text-center">
+              <a class="btn" href="/2014/03/21/改造 cmd 成 shell/#more">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/cmd/">
+                #cmd
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2013/11/29/Ubuntu 安装后的 Todolist/">
+                Ubuntu 安装后的 Todolist
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            发表于 2013-11-29
+          
+        </span>
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2013/11/29/Ubuntu 安装后的 Todolist/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/29/Ubuntu 安装后的 Todolist/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <p>Ubuntu 12.04 64-bit 桌面版简单配置，以下为 todolist</p>
+<h2 id="摘要">摘要</h2><p>安装 Ubuntu 后的 todolist，关键点：  </p>
+<ol>
+<li>修改软件源，用 aptitude 统一管理软件  </li>
+<li>按需设置代理  </li>
+<li>配置自己的环境变量、别名    </li>
+</ol>
+            <div class="post-more-link text-center">
+              <a class="btn" href="/2013/11/29/Ubuntu 安装后的 Todolist/#more">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Ubuntu/">
+                #Ubuntu
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
 
 
   
 
           </div>
 
+          
+            <div class="pagination">
+              <a class="extend prev" rel="prev" href="/">&laquo;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+            </div>
           
         </div>
 
@@ -333,12 +658,6 @@
 
   
   
-  
-    <script type="text/javascript">
-      postMotionOptions = {stagger: 100, drag: true};
-    </script>
-  
-
 
   
   <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
@@ -380,6 +699,17 @@
   <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
 
   
+  <script type="text/javascript" id="motion.page.home">
+    $(document).ready(function () {
+      $.Velocity.RunSequence([
+        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
+        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200, sequenceQueue: false } }
+      ]);
+      $('.menu-item').velocity('transition.slideDownIn', {display: null});
+    });
+  </script>
+
 
   <script type="text/javascript" id="motion.global">
   $(document).ready(function () {
@@ -499,12 +829,6 @@
 
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
-
 
   
 <script type="text/x-mathjax-config">

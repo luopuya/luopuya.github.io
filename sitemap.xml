@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://luopuya.github.io/2015/01/09/Alias%20for%20cmd/</loc>
+    <lastmod>2015-03-20T12:07:47.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://luopuya.github.io/about/index.html</loc>
     <lastmod>2015-03-20T11:51:39.000Z</lastmod>
   </url>
@@ -44,11 +49,6 @@
   <url>
     <loc>http://luopuya.github.io/2014/03/29/Python%20Subprocess%20with%20.bashrc/</loc>
     <lastmod>2015-03-20T11:02:15.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://luopuya.github.io/2015/01/09/Alias%20for%20cmd/</loc>
-    <lastmod>2015-03-20T10:52:07.000Z</lastmod>
   </url>
   
   <url>
